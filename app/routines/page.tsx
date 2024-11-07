@@ -34,7 +34,7 @@ function RoutineCard({ isBorderB }: { isBorderB: boolean }) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
-        <div className={`relative w-full px-4 py-8 ${isBorderB ? "" : "border-b"}`}>
+        <div className={`relative w-full overflow-hidden px-4 py-8 ${isBorderB ? "" : "border-b"}`}>
             <div className={`min-h-28 h-28 w-full flex flex-col justify-between`}>
                 <div>
                     <p className="text-nowrap text-2xl font-semibold tracking-tight">Pecho plano</p>
