@@ -10,13 +10,13 @@ export default function RoutinePage() {
 
     return (
         <section className="flex flex-col relative pt-12 -mb-4 w-full">
-            <div className="flex justify-center h-16 px-8 fixed top-0 left-0 z-10 border-b w-full max-w-[768px] bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40">
-                <div className="flex flex-row justify-start items-center gap-8 w-full h-full overflow-x-scroll no-scrollbar overflow-y-hidden">
+            <div className="flex justify-center h-16 fixed top-0 left-0 z-10 px-4 border-b w-full max-w-[768px] bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40">
+                <div className="flex flex-row justify-start items-center gap-4 w-full h-full overflow-x-scroll no-scrollbar overflow-y-hidden">
                     {dias.map((routineData, index) => {
                         const isActive = index === 0
 
                         return (
-                            <p key={index} className={`${isActive ? "text-[#52A8FF]" : "text-muted-foreground"} whitespace-nowrap`}>
+                            <p key={index} className={`${isActive ? "text-[#9162c0] font-semibold" : "text-muted-foreground"} text-base whitespace-nowrap px-4 text-left`}>
                                 {routineData}
                             </p>
                         )
@@ -37,11 +37,11 @@ function RoutineCard({ isBorderB }: { isBorderB: boolean }) {
         <div className={`relative w-full overflow-hidden px-4 py-8 ${isBorderB ? "" : "border-b"}`}>
             <div className={`min-h-28 h-28 w-full flex flex-col justify-between`}>
                 <div>
-                    <p className="text-nowrap text-2xl font-semibold tracking-tight">Pecho plano</p>
-                    <p className="text-nowrap text-sm text-muted-foreground">12 Repeticiones</p>
+                    <p className="whitespace-nowrap text-2xl font-semibold tracking-tight">Pecho plano</p>
+                    <p className="whitespace-nowrap text-sm text-muted-foreground">12 Repeticiones</p>
                 </div>
                 <div>
-                    <Badge variant={'violet'} className=" whitespace-nowrap">
+                    <Badge variant={'violet'} className="whitespace-nowrap">
                         25,5 kg
                     </Badge>
                 </div>
@@ -84,23 +84,23 @@ function RoutineCard({ isBorderB }: { isBorderB: boolean }) {
                 </div>
                 <div className={`relative flex flex-col items-end justify-center gap-6 h-full w-full`}>
                     <div className="flex items-center gap-4">
-                        <p className="text-nowrap text-sm text-muted-foreground">12 Reps.</p>
+                        <p className="whitespace-nowrap text-sm text-muted-foreground">12 Reps.</p>
                         <div className="flex gap-6">
-                            <Button size={'icon'} variant="outline">
+                            <Button size={'icon'} variant="violet">
                                 <MinusIcon className="h-5 w-5" />
                             </Button>
-                            <Button size={'icon'} variant="outline">
+                            <Button size={'icon'} variant="violet">
                                 <PlusIcon className="h-5 w-5" />
                             </Button>
                         </div>
                     </div>
                     <div className="flex items-center gap-4">
-                        <p className="text-nowrap text-sm text-muted-foreground">25,5 Kg.</p>
+                        <p className="whitespace-nowrap text-sm text-muted-foreground">25,5 Kg.</p>
                         <div className="flex gap-6">
-                            <Button size={'icon'} variant="outline">
+                            <Button size={'icon'} variant="violet">
                                 <MinusIcon className="h-5 w-5" />
                             </Button>
-                            <Button size={'icon'} variant="outline">
+                            <Button size={'icon'} variant="violet">
                                 <PlusIcon className="h-5 w-5" />
                             </Button>
                         </div>

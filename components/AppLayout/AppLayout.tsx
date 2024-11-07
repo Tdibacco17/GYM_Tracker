@@ -17,11 +17,11 @@ export default function AppLayout({ children }: { children: React.ReactNode; }) 
             </div>
             <section className="h-14 w-full flex justify-between items-center border-t">
                 <Link href={'/'} className="w-full flex justify-center items-center">
-                    <PersonIcon className="h-6 w-6" color={isProfile ? "#52A8FF" : "#ffffff"} />
+                    <PersonIcon className="h-6 w-6" color={isProfile ? "#9162c0" : "#ffffff"} />
                 </Link>
                 <div className="w-[1px] h-full bg-border" />
                 <Link href={'/routines'} className="w-full flex justify-center items-center">
-                    <FileTextIcon className="h-6 w-6" color={isRoutines ? "#52A8FF" : "#ffffff"} />
+                    <FileTextIcon className="h-6 w-6" color={isRoutines ? "#9162c0" : "#ffffff"} />
                 </Link>
             </section>
         </main>
