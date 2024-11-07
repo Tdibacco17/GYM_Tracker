@@ -10,7 +10,7 @@ export default function RoutinePage() {
 
     return (
         <section className="flex flex-col relative pt-16 w-full">
-            <div className="flex justify-center h-16 px-8 fixed top-0 left-0 z-10 border-b w-full max-w-[768px] bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <div className="flex justify-center h-16 px-8 fixed top-0 left-0 z-10 border-b w-full max-w-[768px] bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40">
                 <div className="flex flex-row justify-start items-center gap-8 w-full h-full overflow-x-scroll no-scrollbar overflow-y-hidden">
                     {dias.map((routineData, index) => {
                         const isActive = index === 0
@@ -47,7 +47,7 @@ function RoutineCard({ isBorderB }: { isBorderB: boolean }) {
                 </div>
             </div>
             {/* Fondo difuminado */}
-            <div className={`${isOpen ? "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60" : "bg-transparent"} absolute top-0 left-0 h-full w-full transition-background duration-300`} />
+            <div className={`${isOpen ? "bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40" : "bg-transparent"} absolute top-0 left-0 h-full w-full transition-background duration-300`} />
             {/* Botonera */}
             <div className={`absolute top-0 ${isOpen ? "right-0" : "-right-[228px]"} bg-background transition-all duration-300 py-8 w-[275px] h-full flex justify-end items-center `}>
                 <div className="border-l flex flex-col justify-between items-center w-14 h-full">
