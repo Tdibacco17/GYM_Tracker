@@ -9,7 +9,7 @@ export default function RoutinePage() {
     const dias = ['Pecho 1', 'Espalda 1', ' Pierna 1', 'Pecho 2', 'Espalda 2', ' Pierna 2']
 
     return (
-        <section className="flex flex-col relative pt-16 w-full">
+        <section className="flex flex-col relative pt-12 -mb-4 w-full">
             <div className="flex justify-center h-16 px-8 fixed top-0 left-0 z-10 border-b w-full max-w-[768px] bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40">
                 <div className="flex flex-row justify-start items-center gap-8 w-full h-full overflow-x-scroll no-scrollbar overflow-y-hidden">
                     {dias.map((routineData, index) => {

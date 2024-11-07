@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: React.ReactNode; }) 
                 </Link>
                 <div className="w-[1px] h-full bg-border" />
                 <Link href={'/routines'} className="w-full flex justify-center items-center">
-                    <FileTextIcon className="h-6 w-6" color={isRoutines ? "#52A8FF" : "#ffffff"}/>
+                    <FileTextIcon className="h-6 w-6" color={isRoutines ? "#52A8FF" : "#ffffff"} />
                 </Link>
             </section>
         </main>
