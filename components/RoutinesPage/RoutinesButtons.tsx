@@ -10,9 +10,9 @@ export default function RoutinesButtons() {
                     <Button variant={'outline'} size={'sm'}>
                         Borrar rutina
                     </Button>
-                    <Button variant={'secondary'} size={'sm'} className="font-semibold" >
+                    {/* <Button variant={'secondary'} size={'sm'} className="font-semibold" >
                         Nueva rutina
-                    </Button>
+                    </Button> */}
                 </div>
                 <div className="flex justify-end gap-4 w-full">
                     <Button variant={'violet'} size={'sm'} className="font-semibold uppercase">

@@ -1,16 +1,16 @@
 'use client'
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import {useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { PlusIcon, MinusIcon, TrashIcon, Pencil2Icon, CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
 
-export default function ExerciseCard({ isBorderT }: { isBorderT: boolean }) {
+export default function ExerciseCard({ isBorderB }: { isBorderB: boolean }) {
     const [isOpen, setIsOpen] = useState(false)
 
     return (
         <>
             <div className={`w-full overflow-hidden px-4`}>
-                <div className={`relative w-full px-4 py-8 ${isBorderT ? "border-y" : "border-b"}`}>
+                <div className={`relative w-full px-4 py-8 ${isBorderB ? "" : "border-b"}`}>
                     <div className={`min-h-28 h-28 w-full flex flex-col justify-between`}>
                         <div>
                             <p className="whitespace-nowrap text-2xl font-semibold tracking-tight">Pecho plano</p>

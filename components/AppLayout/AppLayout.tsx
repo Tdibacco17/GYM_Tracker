@@ -9,7 +9,7 @@ export default function AppLayout({ children }: { children: React.ReactNode; }) 
     const isRoutines = pathname === "/routines"
 
     return (
-        <main className="min-h-[100vh] h-[100vh] w-full flex flex-col relative">
+        <main className="min-h-svh h-svh max-h-svh w-full flex flex-col relative">
             <div className="w-full h-full overflow-hidden pt-4 flex justify-center">
                 <div className="h-full overflow-y-scroll no-scrollbar pb-[7.5rem] w-full">
                     {children}

@@ -23,7 +23,7 @@ async function ExercisesGrid() {
         <>
             <RoutinesButtons />
             {arreglo.map((_, index) => {
-                return <ExerciseCard key={index} isBorderT={index === 0} />
+                return <ExerciseCard key={index} isBorderB={index >= arreglo.length - 1} />
             })}
         </>
     )

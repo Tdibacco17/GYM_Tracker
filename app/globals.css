@@ -62,6 +62,6 @@ body::-webkit-scrollbar {
   }
 
   body {
-    @apply bg-background text-foreground max-w-[768px] h-full scroll-smooth overflow-x-hidden;
+    @apply bg-background text-foreground max-w-[768px] min-h-[100vh] h-[100vh] scroll-smooth overflow-x-hidden;
   }
 }
