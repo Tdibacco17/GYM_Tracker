@@ -6,15 +6,18 @@ body {
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-body::-webkit-scrollbar,
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
 
-body,
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  background-color: transparent;
 }
 
 @layer utilities {
@@ -59,6 +62,6 @@ body,
   }
 
   body {
-    @apply bg-background text-foreground h-lvh min-h-lvh max-h-lvh overflow-hidden max-w-[768px];
+    @apply bg-background text-foreground max-w-[768px] h-full scroll-smooth overflow-x-hidden;
   }
 }

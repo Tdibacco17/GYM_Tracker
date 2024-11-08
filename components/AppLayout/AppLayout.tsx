@@ -9,13 +9,13 @@ export default function AppLayout({ children }: { children: React.ReactNode; }) 
     const isRoutines = pathname === "/routines"
 
     return (
-        <main className="min-h-svh h-svh max-h-svh w-full flex flex-col relative">
-            <div className="w-full h-full overflow-hidden px-4 pt-4 flex justify-center">
-                <div className="h-full overflow-y-scroll no-scrollbar pb-4 w-full">
+        <main className="min-h-[100vh] h-[100vh] w-full flex flex-col relative">
+            <div className="w-full h-full overflow-hidden pt-4 flex justify-center">
+                <div className="h-full overflow-y-scroll no-scrollbar pb-[7.5rem] w-full">
                     {children}
                 </div>
             </div>
-            <section className="h-14 w-full flex justify-between items-center border-t">
+            <section className="fixed bottom-0 bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40 h-14 w-full flex justify-between items-center border-t">
                 <Link href={'/'} className="w-full flex justify-center items-center">
                     <PersonIcon className="h-6 w-6" color={isProfile ? "#9162c0" : "#ffffff"} />
                 </Link>
