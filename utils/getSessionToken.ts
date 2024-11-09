@@ -2,8 +2,9 @@
 import { getToken } from "next-auth/jwt";
 import { cookies } from 'next/headers';
 import { compare } from "./bcrypt";
+import { NextAuthToken } from "@/types/ModelsTypes";
 
-export async function getSessionToken() {
+export async function getSessionToken(): Promise<NextAuthToken | null> {
     try {
         const session = await getToken({
             req: {
@@ -12,7 +13,7 @@ export async function getSessionToken() {
                 }
             } as any,
             secret: process.env.NEXTAUTH_SECRET as string
-        });
+        }) as NextAuthToken | null;
 
         if (!session) {
             return null;

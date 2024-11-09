@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 
 export default function AppAdminLayout({ children }: { children: React.ReactNode; }) {
     const pathname = usePathname()
-    const isProfile = pathname === "" || pathname === "/"
-    const isRoutines = pathname === "/routines"
+    const isProfile = pathname === "/dashboard"
+    const isRoutines = pathname === "/dashboard/routines"
 
     return (
         <main className="h-full w-full flex flex-col relative overflow-hidden">

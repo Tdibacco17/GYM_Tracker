@@ -57,9 +57,9 @@ export default function LoginPageClient() {
         <Card className="w-full sm:w-96 border-none">
             <CardHeader>
                 <CardTitle className="text-2xl font-semibold leading-none tracking-tight text-center">Iniciar sesión</CardTitle>
-                <CardDescription className="text-sm text-muted-foreground text-center">Bienvenido de nuevo! Por favor inicia sesión para continuar</CardDescription>
+                <CardDescription className="text-sm text-muted-foreground text-center">Bienvenido de nuevo! Por favor inicia sesión para continuar.</CardDescription>
             </CardHeader>
-            <form onSubmit={handleSubmit} className="">
+            <form onSubmit={handleSubmit}>
                 <CardContent className="grid gap-y-[1.25rem]">
                     <div className="grid grid-cols-2 gap-x-4">
                         <Button disabled={true} size="sm" type="button" variant={'outline'} className="text-sm font-medium px-3 whitespace-nowrap h-9">

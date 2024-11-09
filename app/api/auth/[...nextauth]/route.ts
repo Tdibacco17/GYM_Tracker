@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import pool from "@/lib/db";
 import { compare } from "@/utils/bcrypt";
-import { User } from "@/types/models";
+import { User } from "@/types/ModelsTypes";
 
 const handler = NextAuth({
     providers: [
@@ -50,6 +50,7 @@ const handler = NextAuth({
         async jwt({ token, user }) {
             if (user) {
                 token.accessToken = user.accessToken;
+                token.id = user.id;
             }
             // console.log('JWT Callback:', token);
             return token;
