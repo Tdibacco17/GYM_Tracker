@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 export default async function NotFound() {
     const session = await getServerSession();
 
-    if (session && session.user.email === process.env.ADMIN_EMAIL) {
+    if (session) {
         return redirect("/dashboard");
     }
 
