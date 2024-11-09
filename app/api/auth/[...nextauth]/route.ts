@@ -38,7 +38,7 @@ const handler = NextAuth({
                         accessToken: user.access_token
                     };
 
-                } catch (error: any) {
+                } catch (error) {
                     console.error("Error in authorize function:", error);
                     return null
                 }
