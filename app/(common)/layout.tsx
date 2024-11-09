@@ -4,7 +4,7 @@ export default function CommonLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="min-h-svh h-svh max-h-svh w-full flex flex-col items-center justify-center p-8">
+        <div className="min-h-svh h-svh max-h-svh w-full flex flex-col items-center justify-center px-4">
             {children}
         </div>
     );
