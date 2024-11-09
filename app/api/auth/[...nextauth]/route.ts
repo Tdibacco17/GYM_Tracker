@@ -35,11 +35,12 @@ const handler = NextAuth({
                     return {
                         id: user.id,
                         email: user.email,
+                        image: "https://github.com/shadcn.png", // user.image ||
                         accessToken: user.access_token
                     };
 
                 } catch (error) {
-                    console.error("Error in authorize function:", error);
+                    // console.error("Error in authorize function:", error);
                     return null
                 }
             }
@@ -48,14 +49,14 @@ const handler = NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.email = user.email;
                 token.accessToken = user.accessToken;
             }
             // console.log('JWT Callback:', token);
             return token;
         },
         async session({ session, token }) {
-            session.user.email = token.email;
+            // session.user.email = session.user.email;
+            // session.user.image = session.user.image;
             // session.user.accessToken  = token.accessToken ;
             // console.log('Session Callback:', session);
             return session;

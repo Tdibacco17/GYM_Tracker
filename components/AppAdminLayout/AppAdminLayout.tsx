@@ -3,7 +3,7 @@ import Link from "next/link";
 import { PersonIcon, FileTextIcon } from "@radix-ui/react-icons";
 import { usePathname } from "next/navigation";
 
-export default function AppLayout({ children }: { children: React.ReactNode; }) {
+export default function AppAdminLayout({ children }: { children: React.ReactNode; }) {
     const pathname = usePathname()
     const isProfile = pathname === "" || pathname === "/"
     const isRoutines = pathname === "/routines"

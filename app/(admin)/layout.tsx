@@ -1,4 +1,4 @@
-import AppLayout from "@/components/AppLayout/AppLayout";
+import AppAdminLayout from "@/components/AppAdminLayout/AppAdminLayout";
 
 export default function AdminLayout({
     children,
@@ -6,8 +6,8 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <AppLayout>
+        <AppAdminLayout>
             {children}
-        </AppLayout>
+        </AppAdminLayout>
     );
 }

@@ -28,7 +28,11 @@ const createUser = async (client, email, password, accessToken) => {
         const result = await client.query(query, values);
         // console.log('User created:', result.rows[0]);
     } catch (error) {
-        console.error('Error creating user:', error.message);
+        if (error.code === '23505') { // Código de error de unicidad en PostgreSQL
+            console.error('Error: El correo electrónico ya está en uso.');
+        } else {
+            console.error('Error creating user:', error.message);
+        }
     }
 };
 
@@ -42,26 +46,34 @@ const createTables = async () => {
         const createTablesQuery = `
             CREATE TABLE IF NOT EXISTS users (
                 id TEXT PRIMARY KEY,
-                email VARCHAR(50) NOT NULL,
+                email VARCHAR(50) NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                access_token TEXT
-            );
-            `;
-        /* 
-                    CREATE TABLE IF NOT EXISTS exercises (
-                id TEXT PRIMARY KEY,
-                name VARCHAR(50) NOT NULL,
-                default_repetitions INT NOT NULL,
-                default_weight DECIMAL(5, 2) NOT NULL
+                access_token TEXT,
+                name VARCHAR(50) DEFAULT NULL,
+                weight DECIMAL(5, 2) DEFAULT NULL,
+                height DECIMAL(5, 2) DEFAULT NULL
             );
 
-            CREATE TABLE IF NOT EXISTS routine (
+            CREATE TABLE IF NOT EXISTS exercises (
                 id TEXT PRIMARY KEY,
-                day_id TEXT REFERENCES days(id) ON DELETE CASCADE,
-                exercise_id TEXT REFERENCES exercises(id) ON DELETE CASCADE,
+                name VARCHAR(50) NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS routines (
+                id TEXT PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
                 created_at TIMESTAMPTZ DEFAULT NOW()
             );
-        */
+
+            CREATE TABLE IF NOT EXISTS routine_exercises (
+                id TEXT PRIMARY KEY,
+                routine_id TEXT REFERENCES routines(id) ON DELETE CASCADE,
+                exercise_id TEXT REFERENCES exercises(id) ON DELETE CASCADE,
+                repetitions INT NOT NULL,
+                weight DECIMAL(5, 2) NOT NULL
+            );
+            `;
 
         await client.query(createTablesQuery);
         console.log('Tables created successfully.');
@@ -79,13 +91,11 @@ const dropTables = async () => {
     try {
         console.log('Dropping tables...');
         const dropTablesQuery = `
-            DROP TABLE IF EXISTS users;
+            DROP TABLE IF EXISTS routine_exercises CASCADE;
+            DROP TABLE IF EXISTS routines CASCADE;
+            DROP TABLE IF EXISTS exercises CASCADE;
+            DROP TABLE IF EXISTS users CASCADE;
         `;
-        /* 
-            DROP TABLE IF EXISTS routine;
-            DROP TABLE IF EXISTS exercises;
-            DROP TABLE IF EXISTS days;
-        */
 
         await client.query(dropTablesQuery);
         console.log('Tables dropped successfully.');
@@ -98,7 +108,7 @@ const dropTables = async () => {
 
 (async () => {
     try {
-        await createTables();
+        // await createTables();
         // await dropTables();
     } catch (error) {
         console.error('Error occurred:', error.message);

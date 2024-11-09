@@ -19,7 +19,10 @@ const nextConfig = {
         ACCESS_TOKEN: accessToken,
         ADMIN_EMAIL: adminEmail,
         ADMIN_PASSWORD: adminPassword,
-    }
+    },
+    images: {
+        domains: ['github.com'],
+    },
 };
 
 export default nextConfig;

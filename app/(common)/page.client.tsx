@@ -14,11 +14,13 @@ import {
 import { Label } from "@/components/ui/label"
 import { useState } from "react";
 import { GitHubIcon, GoogleIcon, SpinIcon } from "@/components/ui/icons";
+import { EyeNoneIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 export default function LoginPageClient() {
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState<null | string>(null);
     const [loading, setLoading] = useState<boolean>(false);
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -73,13 +75,20 @@ export default function LoginPageClient() {
                     <div className="space-y-2">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="login-email">Email</Label>
-                            <Input id="login-email" name="email" placeholder="m@example.com" type="email" className="placeholder:text-xs h-10" />
+                            <Input id="login-email" name="email" placeholder="m@example.com" type="email" />
                         </div>
                     </div>
                     <div className="space-y-2">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="login-password">Contraseña</Label>
-                            <Input id="login-password" name="password" placeholder="********" type="password" className="placeholder:text-xs h-10" />
+                            <div className="relative w-full">
+                                <Input id="login-password" name="password" placeholder="********" type={showPassword ? "text" : "password"} />
+                                <div
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-0 px-3 flex items-center text-sm leading-5">
+                                    {showPassword ? <EyeOpenIcon /> : <EyeNoneIcon />}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </CardContent>
