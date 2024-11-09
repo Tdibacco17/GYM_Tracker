@@ -40,7 +40,7 @@ const handler = NextAuth({
                     };
 
                 } catch (error) {
-                    // console.error("Error in authorize function:", error);
+                    console.error("Error in authorize function:", error); // line fix build
                     return null
                 }
             }
@@ -54,7 +54,7 @@ const handler = NextAuth({
             // console.log('JWT Callback:', token);
             return token;
         },
-        async session({ session, token }) {
+        async session({ session }) {
             // session.user.email = session.user.email;
             // session.user.image = session.user.image;
             // session.user.accessToken  = token.accessToken ;
