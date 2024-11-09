@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { GeistSans } from "@/fonts";
 import { Toaster } from "sonner";
-import AppLayout from "@/components/AppLayout/AppLayout";
+import SessionProvider from "@/context/SessionProvider";
 
 export const metadata: Metadata = {
   title: "Gym track",
@@ -25,9 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${GeistSans.variable} antialiased`}>
-        <AppLayout>
+        <SessionProvider>
           {children}
-        </AppLayout>
+        </SessionProvider>
         <Toaster richColors position="bottom-left" />
       </body>
     </html>
