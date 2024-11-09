@@ -73,13 +73,13 @@ export default function LoginPageClient() {
                     <div className="space-y-2">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="login-email">Email</Label>
-                            <Input id="login-email" name="email" placeholder="m@example.com" type="email" />
+                            <Input id="login-email" name="email" placeholder="m@example.com" type="email" className="placeholder:text-xs h-10" />
                         </div>
                     </div>
                     <div className="space-y-2">
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="login-password">Contraseña</Label>
-                            <Input id="login-password" name="password" placeholder="********" type="password" />
+                            <Input id="login-password" name="password" placeholder="********" type="password" className="placeholder:text-xs h-10" />
                         </div>
                     </div>
                 </CardContent>
