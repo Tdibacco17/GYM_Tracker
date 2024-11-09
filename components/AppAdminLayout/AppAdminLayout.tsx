@@ -9,11 +9,9 @@ export default function AppAdminLayout({ children }: { children: React.ReactNode
     const isRoutines = pathname === "/routines"
 
     return (
-        <main className="min-h-[100vh] h-[100vh] max-h-[100vh] w-full flex flex-col relative">
-            <div className="w-full h-full overflow-hidden pt-4 flex justify-center">
-                <div className="h-full overflow-y-scroll no-scrollbar pb-[7.5rem] w-full">
-                    {children}
-                </div>
+        <main className="h-full w-full flex flex-col relative overflow-hidden">
+            <div className="min-h-svh h-svh overflow-y-scroll no-scrollbar pt-4  pb-[7.5rem] w-full">
+                {children}
             </div>
             <section className="fixed bottom-0 bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40 h-14 w-full flex justify-between items-center border-t">
                 <Link href={'/dashboard'} className="w-full flex justify-center items-center">
