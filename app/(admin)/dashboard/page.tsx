@@ -12,7 +12,7 @@ async function ProfilePage() {
   // console.log('[coockie]: ', coockie);
 
   return (
-    <section className="flex flex-col items-center gap-6 relative p-4 w-full h-full">
+    <section className="flex flex-col items-center gap-6 relative p-4 w-full">
 
       <div className="absolute top-0 right-0 pt-4 pr-4">
         <SignOutButton />

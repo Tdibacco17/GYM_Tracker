@@ -10,7 +10,7 @@ export default function AppAdminLayout({ children }: { children: React.ReactNode
 
     return (
         <main className="h-full w-full flex flex-col relative overflow-hidden">
-            <div className="min-h-svh h-svh overflow-y-scroll no-scrollbar pt-4  pb-[7.5rem] w-full">
+            <div className="min-h-svh h-svh overflow-y-scroll no-scrollbar pt-4 pb-[7.5rem] w-full">
                 {children}
             </div>
             <section className="fixed bottom-0 bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40 h-14 w-full flex justify-between items-center border-t">
