@@ -15,9 +15,7 @@ import {
     TabsList,
     TabsTrigger,
 } from "@/components/ui/tabs"
-import { NextAuthToken } from "@/types/ModelsTypes";
-import { getSessionToken } from "@/utils/getSessionToken";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/button"
 
 export default function ProfileTabs() {
     return (

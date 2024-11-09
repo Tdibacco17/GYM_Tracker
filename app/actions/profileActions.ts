@@ -25,6 +25,7 @@ export async function updateProfileData(
 
         return { message: 'string', status: 200, }
     } catch (error) {
+        console.error(error); // line fix build
         return { message: `Ocurrio un error inesperado.`, status: 500 };
     }
 }
