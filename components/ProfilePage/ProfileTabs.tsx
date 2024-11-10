@@ -33,6 +33,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
         const height = (formData.get('desired-weight') as string)?.trim() || null;
 
         const response = await updateProfileData(name, weight, height);
+        console.log(response, 'response update')
 
         if (response.status === 500) {
             toast.error(response.message);
