@@ -14,7 +14,6 @@ async function ProfilePage() {
   if (!session) return null
 
   const profileData: ApiDataResponseInterface = await getProfileData()
-  console.log(profileData, 'PROFILEDATA')
   // const coockie: NextAuthToken | null = await getSessionToken()
 
   return (

@@ -6,10 +6,19 @@ import { NextAuthToken } from "@/types/ModelsTypes";
 
 export async function getSessionToken(): Promise<NextAuthToken | null> {
     try {
+        const sessionToken =
+            cookies().get('__Secure-next-auth.session-token')?.value
+            || cookies().get('next-auth.session-token')?.value;
+
+        if (!sessionToken) {
+            console.error("Session token not found");
+            return null;
+        }
+
         const session = await getToken({
             req: {
                 cookies: {
-                    'next-auth.session-token': cookies().get('next-auth.session-token')?.value
+                    [sessionToken.startsWith('__Secure-') ? '__Secure-next-auth.session-token' : 'next-auth.session-token']: sessionToken
                 }
             } as any,
             secret: process.env.NEXTAUTH_SECRET as string
