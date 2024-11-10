@@ -21,7 +21,7 @@ import { FormEvent } from "react"
 import { toast } from "sonner"
 import { UserProfileData } from "@/types/ApiProfile"
 
-export default function ProfileTabs({ profileData }: { profileData: UserProfileData | undefined }) {
+export default function ProfileTabs({ profileData }: { profileData: UserProfileData | null }) {
 
     const handleUpdate = async (e: FormEvent) => {
         e.preventDefault();
@@ -36,6 +36,10 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
 
         if (response.status === 500) {
             toast.error(response.message);
+            return;
+        }
+        if (response.status !== 200) {
+            toast.warning(response.message)
             return;
         }
         toast.success(response.message);

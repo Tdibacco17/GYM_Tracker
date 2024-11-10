@@ -14,7 +14,7 @@ export async function updateProfileData(
     try {
         //middleware
         const session: NextAuthToken | null = await getSessionToken()
-        if (!session) throw new Error("No session found");
+        if (!session) return { message: `No existe una sesión.`, status: 404 };
 
         const query = `
         UPDATE users 
@@ -24,8 +24,7 @@ export async function updateProfileData(
 
         const result = await pool.query(query, [name, weight, height, session.id]);
 
-        if (result.rowCount === 0)
-            throw new Error('No se encontró el usuario o no se realizó ninguna actualización.')
+        if (result.rowCount === 0) return { message: 'Usuario no encontrado o no se realizó ninguna actualización. ', status: 404, }
 
         revalidatePath('/dashboard')
         return { message: 'Datos actualizados con exito!', status: 200, }
@@ -39,7 +38,7 @@ export async function getProfileData(): Promise<ApiDataResponseInterface> {
     try {
         //middleware
         const session: NextAuthToken | null = await getSessionToken()
-        if (!session) throw new Error("No session found");
+        if (!session) return { message: `No existe una sesión.`, status: 404, data: null };
 
         const query = `
         SELECT email, name, weight, height
@@ -48,8 +47,7 @@ export async function getProfileData(): Promise<ApiDataResponseInterface> {
         `;
         const result = await pool.query(query, [session.id]);
 
-        if (result.rowCount === 0)
-            throw new Error('No se encontró el usuario o no se realizó ninguna actualización.')
+        if (result.rowCount === 0) return { message: 'Usuario no encontrado o no se realizó ninguna actualización.', status: 404, }
 
         const userData = result.rows[0];
 

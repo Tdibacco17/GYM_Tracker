@@ -2,7 +2,9 @@ import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { UserProfileData } from "@/types/ApiProfile";
 
-export default async function Presentation({ profileData }: { profileData: UserProfileData | undefined }) {
+export default async function Presentation(
+    { profileData }: { profileData: UserProfileData | null }
+) {
     const session = await getServerSession();
     return (
         <>
