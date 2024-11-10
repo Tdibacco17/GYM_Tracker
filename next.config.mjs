@@ -21,7 +21,13 @@ const nextConfig = {
         ADMIN_PASSWORD: adminPassword,
     },
     images: {
-        domains: ['github.com'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'github.com',
+                pathname: '/**',
+            },
+        ],
     },
 };
 

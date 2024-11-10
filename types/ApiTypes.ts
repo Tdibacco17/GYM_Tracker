@@ -4,5 +4,5 @@ export interface ApiResponseInterface {
 }
 
 export interface ApiDataResponseInterface extends ApiResponseInterface {
-    data?: any | undefined
+    data?: any | null 
 }

@@ -18,7 +18,7 @@ export async function getSessionToken(): Promise<NextAuthToken | null> {
         if (!session) {
             return null;
         }
-        if (!(await compare(process.env.ACCESS_TOKEN, session.accessToken))) {
+        if (!(await compare(process.env.ACCESS_TOKEN, session?.accessToken))) {
             return null;
         }
 

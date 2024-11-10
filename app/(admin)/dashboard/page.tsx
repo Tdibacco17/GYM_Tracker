@@ -2,13 +2,23 @@ import { getProfileData } from "@/app/actions/profileActions";
 import Presentation from "@/components/ProfilePage/Presentation";
 import ProfileTabs from "@/components/ProfilePage/ProfileTabs";
 import SignOutButton from "@/components/SignOutButton/SignOutButton";
+import { ApiDataResponseInterface } from "@/types/ApiTypes";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 export default function Page() {
   return <ProfilePage />
 }
 
 async function ProfilePage() {
-  const profileData = await getProfileData()
+  const session = await getServerSession();
+
+  if (!session) {
+    redirect('/');
+    return null;
+  }
+
+  const profileData: ApiDataResponseInterface = await getProfileData()
   // const coockie: NextAuthToken | null = await getSessionToken()
   // console.log('[coockie]: ', coockie);
 
@@ -20,7 +30,6 @@ async function ProfilePage() {
       </div>
 
       <Presentation profileData={profileData.data} />
-
       <ProfileTabs profileData={profileData.data} />
 
     </section>

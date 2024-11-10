@@ -56,6 +56,6 @@ export async function getProfileData(): Promise<ApiDataResponseInterface> {
         return { message: 'Datos actualizados con exito!', status: 200, data: userData }
     } catch (error) {
         console.error(error); // line fix build
-        return { message: `Ocurrio un error inesperado.`, status: 500, data: undefined };
+        return { message: `Ocurrio un error inesperado.`, status: 500, data: null };
     }
 }
