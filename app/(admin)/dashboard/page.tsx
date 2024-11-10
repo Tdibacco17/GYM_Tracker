@@ -1,13 +1,14 @@
+import { getProfileData } from "@/app/actions/profileActions";
 import Presentation from "@/components/ProfilePage/Presentation";
 import ProfileTabs from "@/components/ProfilePage/ProfileTabs";
 import SignOutButton from "@/components/SignOutButton/SignOutButton";
-
 
 export default function Page() {
   return <ProfilePage />
 }
 
 async function ProfilePage() {
+  const profileData = await getProfileData()
   // const coockie: NextAuthToken | null = await getSessionToken()
   // console.log('[coockie]: ', coockie);
 
@@ -18,9 +19,9 @@ async function ProfilePage() {
         <SignOutButton />
       </div>
 
-      <Presentation />
+      <Presentation profileData={profileData.data} />
 
-      <ProfileTabs />
+      <ProfileTabs profileData={profileData.data} />
 
     </section>
   );

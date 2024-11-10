@@ -1,9 +1,9 @@
 import Image from "next/image";
 import { getServerSession } from "next-auth";
+import { UserProfileData } from "@/types/ApiProfile";
 
-export default async function Presentation() {
+export default async function Presentation({ profileData }: { profileData: UserProfileData | undefined }) {
     const session = await getServerSession();
-
     return (
         <>
             <div className="rounded-full min-w-24 max-w-24 w-24 min-h-24 h-24 max-h-24 overflow-hidden bg-[#27272A]">
@@ -15,7 +15,7 @@ export default async function Presentation() {
                     className="min-w-24 max-w-24 w-24 h-auto"
                 />
             </div>
-            <p className="text-muted-foreground">{session?.user.email || 'Bienvenido!'}</p>
+            <p className="text-muted-foreground">{session?.user.email || `Bienvenido ${profileData?.name}`}</p>
         </>
     )
 }

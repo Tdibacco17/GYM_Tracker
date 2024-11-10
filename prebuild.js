@@ -50,8 +50,8 @@ const createTables = async () => {
                 password TEXT NOT NULL,
                 access_token TEXT,
                 name VARCHAR(50) DEFAULT NULL,
-                weight DECIMAL(5, 2) DEFAULT NULL,
-                height DECIMAL(5, 2) DEFAULT NULL
+                weight TEXT DEFAULT NULL,
+                height TEXT DEFAULT NULL
             );
 
             CREATE TABLE IF NOT EXISTS exercises (

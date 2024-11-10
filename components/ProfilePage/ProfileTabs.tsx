@@ -1,4 +1,4 @@
-
+'use client'
 import {
     Card,
     CardContent,
@@ -16,8 +16,31 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
+import { updateProfileData } from "@/app/actions/profileActions"
+import { FormEvent } from "react"
+import { toast } from "sonner"
+import { UserProfileData } from "@/types/ApiProfile"
 
-export default function ProfileTabs() {
+export default function ProfileTabs({ profileData }: { profileData: UserProfileData | undefined }) {
+
+    const handleUpdate = async (e: FormEvent) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget as HTMLFormElement);
+
+        const name = (formData.get('name') as string)?.trim() || null;
+        const weight = (formData.get('current-weight') as string)?.trim() || null;
+        const height = (formData.get('desired-weight') as string)?.trim() || null;
+
+        const response = await updateProfileData(name, weight, height);
+
+        if (response.status === 500) {
+            toast.error(response.message);
+            return;
+        }
+        toast.success(response.message);
+    }
+
     return (
         <Tabs defaultValue="profile" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
@@ -35,7 +58,7 @@ export default function ProfileTabs() {
                                     Peso actual
                                 </p>
                                 <p className="text-sm text-muted-foreground">
-                                    90,5kg
+                                    {profileData?.weight || 'Ir en configuración'}
                                 </p>
                             </div>
                         </div>
@@ -46,14 +69,13 @@ export default function ProfileTabs() {
                                     Peso deseado
                                 </p>
                                 <p className="text-sm text-muted-foreground">
-                                    86,5kg
+                                    {profileData?.height || 'Ir en configuración'}
                                 </p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="flex justify-center
-          ">
+                    <div className="flex justify-center">
                         <Button variant={'secondary'} size={'lg'} className="font-semibold" >
                             Crear una nueva rutina
                         </Button>
@@ -72,19 +94,37 @@ export default function ProfileTabs() {
                         </div>
                         <div className="bg-border h-[1px] w-full"></div>
                     </CardHeader>
-                    <form>
+                    <form onSubmit={handleUpdate}>
                         <CardContent className="space-y-2 px-0">
                             <div className="space-y-1">
                                 <Label htmlFor="account-name">Nombre</Label>
-                                <Input id="account-name" name="name" placeholder="Jhon Doe" type="text" />
+                                <Input
+                                    id="account-name"
+                                    name="name"
+                                    placeholder="Jhon Doe"
+                                    type="text"
+                                    defaultValue={profileData?.name || ''}
+                                />
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="account-current-weight">Peso actual</Label>
-                                <Input id="account-current-weight" name="current-weight" placeholder="90,5 kg" type="text" />
+                                <Input
+                                    id="account-current-weight"
+                                    name="current-weight"
+                                    placeholder="90,5 kg"
+                                    type="text"
+                                    defaultValue={profileData?.weight || ''}
+                                />
                             </div>
                             <div className="space-y-1">
                                 <Label htmlFor="account-desired-weight">Peso deseado</Label>
-                                <Input id="account-desired-weight" name="desired-weight" placeholder="87,5 kg" type="text" />
+                                <Input
+                                    id="account-desired-weight"
+                                    name="desired-weight"
+                                    placeholder="87,5 kg"
+                                    type="text"
+                                    defaultValue={profileData?.height || ''}
+                                />
                             </div>
                         </CardContent>
                         <CardFooter className="p-0">
