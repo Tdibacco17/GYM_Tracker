@@ -16,10 +16,10 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { updateProfileData } from "@/app/actions/profileActions"
 import { FormEvent } from "react"
 import { toast } from "sonner"
 import { UserProfileData } from "@/types/ApiProfile"
+import { updateProfileData } from "@/app/actions/profileActions"
 
 export default function ProfileTabs({ profileData }: { profileData: UserProfileData | null }) {
 
@@ -33,7 +33,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
         const height = (formData.get('desired-weight') as string)?.trim() || null;
 
         const response = await updateProfileData(name, weight, height);
-
+        
         if (response.status === 500) {
             toast.error(response.message);
             return;
