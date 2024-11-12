@@ -20,7 +20,6 @@ export async function getSessionToken(): Promise<NextAuthToken | null> {
             } as any,
             secret: process.env.NEXTAUTH_SECRET as string
         }) as NextAuthToken | null;
-        console.log(session, 'SESSION')
         
         if (!session) {
             return null;

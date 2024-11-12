@@ -49,9 +49,14 @@ const createTables = async () => {
                 email VARCHAR(50) NOT NULL UNIQUE,
                 password TEXT NOT NULL,
                 access_token TEXT,
-                name VARCHAR(50) DEFAULT NULL,
-                weight TEXT DEFAULT NULL,
-                height TEXT DEFAULT NULL
+                height FLOAT DEFAULT NULL,
+                desired_weight FLOAT DEFAULT NULL,
+                current_weight FLOAT DEFAULT NULL,
+                age INT DEFAULT NULL,
+                gender VARCHAR(10) DEFAULT NULL,
+                daily_activity VARCHAR(20) DEFAULT NULL,
+                weight_goal VARCHAR(10) DEFAULT NULL,
+                weight_change_goal FLOAT DEFAULT NULL
             );
 
             CREATE TABLE IF NOT EXISTS exercises (
@@ -108,7 +113,7 @@ const dropTables = async () => {
 
 (async () => {
     try {
-        // await createTables();
+        await createTables();
         // await dropTables();
     } catch (error) {
         console.error('Error occurred:', error.message);

@@ -1,28 +1,39 @@
 'use server'
 
 import pool from "@/lib/db";
+import { AccountData, UserProfileData } from "@/types/ApiProfile";
 import { ApiDataResponseInterface, ApiResponseInterface } from "@/types/ApiTypes";
 import { NextAuthToken } from "@/types/ModelsTypes";
 import { getSessionToken } from "@/utils/getSessionToken";
 import { revalidatePath } from "next/cache";
 
 export async function updateProfileData(
-    name: string | null,
-    weight: string | null,
-    height: string | null
+    accountData: AccountData
 ): Promise<ApiResponseInterface> {
     try {
         //middleware
         const session: NextAuthToken | null = await getSessionToken()
         if (!session) return { message: `No existe una sesión.`, status: 404 };
 
+        const { currentWeight, desiredWeight, height, age, gender, dailyActivity, weightGoal, weightChangeGoal } = accountData;
+
         const query = `
         UPDATE users 
-        SET name = $1, weight = $2, height = $3
-        WHERE id = $4
+        SET current_weight = $1, desired_weight = $2, height = $3, age = $4, gender = $5, daily_activity = $6, weight_goal = $7, weight_change_goal = $8
+        WHERE id = $9
         `;
 
-        const result = await pool.query(query, [name, weight, height, session.id]);
+        const result = await pool.query(query, [
+            currentWeight,
+            desiredWeight,
+            height,
+            age,
+            gender,
+            dailyActivity,
+            weightGoal,
+            weightChangeGoal,
+            session.id
+        ]);
 
         if (result.rowCount === 0) return { message: 'Usuario no encontrado o no se realizó ninguna actualización. ', status: 404, }
 
@@ -41,15 +52,16 @@ export async function getProfileData(): Promise<ApiDataResponseInterface> {
         if (!session) return { message: `No existe una sesión.`, status: 404, data: null };
 
         const query = `
-        SELECT email, name, weight, height
+        SELECT email, height, desired_weight, current_weight, age, gender, daily_activity, weight_goal, weight_change_goal
         FROM users
         WHERE id = $1
         `;
+
         const result = await pool.query(query, [session.id]);
 
         if (result.rowCount === 0) return { message: 'Usuario no encontrado o no se realizó ninguna actualización.', status: 404, }
 
-        const userData = result.rows[0];
+        const userData: UserProfileData = result.rows[0];
 
         return { message: 'Datos actualizados con exito!', status: 200, data: userData }
     } catch (error) {
