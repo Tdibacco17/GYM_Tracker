@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { getServerSession } from "next-auth";
+import { Session } from "next-auth";
 
-export default async function Presentation() {
-    const session = await getServerSession();
+export default async function Presentation({ session }: { session: Session | null }) {
     return (
         <>
             <div className="rounded-full min-w-24 max-w-24 w-24 min-h-24 h-24 max-h-24 overflow-hidden bg-[#27272A]">

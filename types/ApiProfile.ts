@@ -1,6 +1,5 @@
 // Get profile info
 export interface UserProfileData {
-    email: string,
     height?: number,
     desired_weight?: number,
     current_weight?: number,

@@ -48,7 +48,11 @@ const createTables = async () => {
                 id TEXT PRIMARY KEY,
                 email VARCHAR(50) NOT NULL UNIQUE,
                 password TEXT NOT NULL,
-                access_token TEXT,
+                access_token TEXT
+            );
+
+            CREATE TABLE IF NOT EXISTS user_profiles (
+                user_id TEXT PRIMARY KEY,
                 height FLOAT DEFAULT NULL,
                 desired_weight FLOAT DEFAULT NULL,
                 current_weight FLOAT DEFAULT NULL,
@@ -56,7 +60,8 @@ const createTables = async () => {
                 gender VARCHAR(10) DEFAULT NULL,
                 daily_activity VARCHAR(20) DEFAULT NULL,
                 weight_goal VARCHAR(10) DEFAULT NULL,
-                weight_change_goal FLOAT DEFAULT NULL
+                weight_change_goal FLOAT DEFAULT NULL,
+                FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             );
 
             CREATE TABLE IF NOT EXISTS exercises (
@@ -99,6 +104,7 @@ const dropTables = async () => {
             DROP TABLE IF EXISTS routine_exercises CASCADE;
             DROP TABLE IF EXISTS routines CASCADE;
             DROP TABLE IF EXISTS exercises CASCADE;
+            DROP TABLE IF EXISTS user_profiles CASCADE;
             DROP TABLE IF EXISTS users CASCADE;
         `;
 
@@ -113,8 +119,8 @@ const dropTables = async () => {
 
 (async () => {
     try {
-        await createTables();
-        // await dropTables();
+        // await createTables();
+        await dropTables();
     } catch (error) {
         console.error('Error occurred:', error.message);
     } finally {

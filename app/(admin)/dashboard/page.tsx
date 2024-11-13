@@ -22,7 +22,7 @@ async function ProfilePage() {
         <SignOutButton />
       </div>
 
-      <Presentation />
+      <Presentation session={session}/>
 
       <ProfileTabs profileData={profileData.data} />
 
