@@ -106,7 +106,9 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         Objetivo
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {profileData?.weight_change_goal || 'Ir en configuración'}
+                                        {profileData?.weight_change_goal
+                                            ? profileData.weight_change_goal * 1000
+                                            : 'Ir en configuración'}
                                     </p>
                                 </div>
                             </div>
@@ -145,7 +147,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                     <form onSubmit={handleUpdate}>
                         <CardContent className="space-y-2 p-0 flex flex-col gap-8">
                             <div className="grid grid-cols-2 w-full gap-8">
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label>Genero</Label>
                                     <Select defaultValue={profileData?.gender || ''} name="gender">
                                         <SelectTrigger className="w-full h-10">
@@ -161,7 +163,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label>Actividad diria</Label>
                                     <Select defaultValue={profileData?.daily_activity || ''} name="daily_activity">
                                         <SelectTrigger className="w-full h-10">
@@ -180,7 +182,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 w-full gap-8">
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label>Objetivo</Label>
                                     <Select defaultValue={profileData?.weight_goal || ''} name="weight_goal">
                                         <SelectTrigger className="w-full h-10">
@@ -195,7 +197,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         </SelectContent>
                                     </Select>
                                 </div>
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label htmlFor="weight_change_goal">{'Peso a cambiar por semana (kg)'}</Label>
                                     <Input
                                         id="weight_change_goal"
@@ -203,12 +205,13 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         placeholder="0.5"
                                         type="number"
                                         step="0.1"
+                                        min="0.1"
                                         defaultValue={profileData?.weight_change_goal || ''}
                                     />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 w-full gap-8">
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label htmlFor="account-height">{'Altura (cm)'}</Label>
                                     <Input
                                         id="account-height"
@@ -216,22 +219,24 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         placeholder="175"
                                         type="number"
                                         step="0.1"
+                                        min="1"
                                         defaultValue={profileData?.height || ''}
                                     />
                                 </div>
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label htmlFor="account-age">Edad</Label>
                                     <Input
                                         id="account-age"
                                         name="age"
                                         placeholder="30"
                                         type="number"
+                                        min="1"
                                         defaultValue={profileData?.age || ''}
                                     />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 w-full gap-8">
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label htmlFor="account-current-weight">Peso actual</Label>
                                     <Input
                                         id="account-current-weight"
@@ -239,10 +244,11 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         placeholder="90.5"
                                         type="number"
                                         step="0.1"
+                                        min="0.1"
                                         defaultValue={profileData?.current_weight || ''}
                                     />
                                 </div>
-                                <div className="flex flex-col gap-2">
+                                <div className="flex flex-col gap-2 justify-between">
                                     <Label htmlFor="account-desired-weight">Peso deseado</Label>
                                     <Input
                                         id="account-desired-weight"
@@ -250,6 +256,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         placeholder="87.5"
                                         type="number"
                                         step="0.1"
+                                        min="0.1"
                                         defaultValue={profileData?.desired_weight || ''}
                                     />
                                 </div>

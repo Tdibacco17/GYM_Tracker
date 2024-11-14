@@ -1,13 +1,13 @@
 // Get profile info
 export interface UserProfileData {
-    height?: number,
-    desired_weight?: number,
-    current_weight?: number,
-    age?: number,
-    gender?: string,
-    daily_activity?: string,
-    weight_goal?: string,
-    weight_change_goal?: number
+    height: number | null,
+    desired_weight: number | null,
+    current_weight: number | null,
+    age: number | null,
+    gender: string | null,
+    daily_activity: string | null,
+    weight_goal: string | null,
+    weight_change_goal: number | null
 }
 
 // Update profile info
