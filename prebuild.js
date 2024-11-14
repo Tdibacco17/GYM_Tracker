@@ -18,15 +18,22 @@ const createUser = async (client, email, password, accessToken) => {
         const hashedPassword = await encrypt(password);
         const hashedAccessToken = await encrypt(accessToken);
 
-        const query = `
+        const userQuery = `
         INSERT INTO users (id, email, password, access_token)
         VALUES ($1, $2, $3, $4)
         RETURNING id, email, access_token;
         `;
-        const values = [userId, email, hashedPassword, hashedAccessToken];
+        const result = await client.query(userQuery, [userId, email, hashedPassword, hashedAccessToken]);
 
-        const result = await client.query(query, values);
-        // console.log('User created:', result.rows[0]);
+        const profileQuery = `
+        INSERT INTO user_profiles (user_id)
+        VALUES ($1)
+        RETURNING *;
+        `;
+
+        const result2 = await client.query(profileQuery, [userId]);
+
+        console.log('User and profile created:', result.rows[0], result2.rows[0]);
     } catch (error) {
         if (error.code === '23505') { // Código de error de unicidad en PostgreSQL
             console.error('Error: El correo electrónico ya está en uso.');
@@ -119,8 +126,8 @@ const dropTables = async () => {
 
 (async () => {
     try {
-        // await createTables();
-        await dropTables();
+        await createTables();
+        // await dropTables();
     } catch (error) {
         console.error('Error occurred:', error.message);
     } finally {

@@ -38,7 +38,7 @@ export async function updateProfileData(
         if (result.rowCount === 0) return { message: 'Usuario no encontrado o no se realizó ninguna actualización. ', status: 404, }
 
         revalidatePath('/dashboard')
-        return { message: 'Datos actualizados con exito!', status: 200, }encontrado o no se realizó ninguna actualiza
+        return { message: 'Datos actualizados con exito!', status: 200, }
     } catch (error) {
         console.error(error); // line fix build
         return { message: `Ocurrio un error inesperado.`, status: 500 };
@@ -52,14 +52,11 @@ export async function getProfileData(): Promise<ApiDataResponseInterface> {
         if (!session) return { message: `No existe una sesión.`, status: 404, data: null };
 
         const query = `
-            SELECT height, desired_weight, current_weight, age, gender, 
-                   daily_activity, weight_goal, weight_change_goal
-            FROM user_profiles
-            WHERE user_id = $1
+            SELECT * FROM user_profiles WHERE user_id = $1
         `;
 
         const result = await pool.query(query, [session.id]);
-
+        
         if (result.rowCount === 0) return { message: 'Usuario no encontrado.', status: 404, }
 
         const userData: UserProfileData = result.rows[0];
