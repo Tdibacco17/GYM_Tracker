@@ -1,4 +1,5 @@
-import AppAdminLayout from "@/components/AppAdminLayout/AppAdminLayout";
+import Navigation from "@/components/Navigation/Navigation";
+import NavigationLayout from "@/components/NavigationLayout/NavigationLayout";
 
 export default function AdminLayout({
     children,
@@ -6,8 +7,13 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <AppAdminLayout>
-            {children}
-        </AppAdminLayout>
+        <main className="h-full w-full flex flex-col relative">
+            <div className="pt-4 pb-[7.5rem] w-full h-full">
+                {children}
+            </div>
+            <NavigationLayout>
+                <Navigation />
+            </NavigationLayout>
+        </main>
     );
 }

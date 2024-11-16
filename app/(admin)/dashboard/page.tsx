@@ -6,34 +6,10 @@ import { ApiDataResponseInterface } from "@/types/ApiTypes";
 import { getProfileData } from "@/app/actions/profileActions";
 import { getRoutines } from "@/app/actions/routineActions";
 import { Suspense } from "react";
-import { SpinIcon } from "@/components/ui/icons";
+import FallbackPresentation from "@/components/Fallbacks/FallbackPresentation";
+import FallbackProfileTabs from "@/components/Fallbacks/FallbackProfileTabs";
 
-export default function Page() {
-  return <Suspense fallback={<SpinIcon />}>
-    <ProfilePage />
-    {/* 
-      <section className="flex flex-col items-center gap-6 relative p-4 w-full">
-
-      <div className="absolute top-0 right-0 pt-4 pr-4">
-        <SignOutButton />
-      </div>
-
-      <Presentation session={session} />
-
-      <ProfileTabs profileData={profileData.data} routinesData={routinesData.data} />
-
-    </section>
-    
-    */}
-  </Suspense>
-}
-
-async function ProfilePage() {
-  const session = await getServerSession();
-  if (!session) return null
-
-  const profileData: ApiDataResponseInterface = await getProfileData()
-  const routinesData: ApiDataResponseInterface = await getRoutines();
+export default function DashboardPage() {
 
   return (
     <section className="flex flex-col items-center gap-6 relative p-4 w-full">
@@ -42,11 +18,31 @@ async function ProfilePage() {
         <SignOutButton />
       </div>
 
-      <Presentation session={session} />
+      <Suspense fallback={<FallbackPresentation />}>
+        <AsyncPresentation />
+      </Suspense>
 
-      <ProfileTabs profileData={profileData.data} routinesData={routinesData.data} />
+      <Suspense fallback={<FallbackProfileTabs />}>
+        <AsyncProfileTabs />
+      </Suspense>
 
     </section>
-  );
+  )
 }
 
+async function AsyncPresentation() {
+  const session = await getServerSession();
+  if (!session) return null
+
+  return <Presentation session={session} />
+}
+
+async function AsyncProfileTabs() {
+  const session = await getServerSession();
+  if (!session) return null
+
+  const profileData: ApiDataResponseInterface = await getProfileData()
+  const routinesData: ApiDataResponseInterface = await getRoutines();
+
+  return <ProfileTabs profileData={profileData.data} routinesData={routinesData.data} />
+}

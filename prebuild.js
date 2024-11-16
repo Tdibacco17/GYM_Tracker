@@ -90,7 +90,7 @@ const createTables = async () => {
                 repetitions INT NOT NULL,
                 weight DECIMAL(5, 2) NOT NULL
             );
-            `;
+        `;
 
         await client.query(createTablesQuery);
         console.log('Tables created successfully.');
