@@ -21,3 +21,10 @@ export interface AccountData {
     weightGoal: string | null,
     weightChangeGoal: number | null
 }
+
+// Get routines 
+export interface UserRoutinesData {
+    id: string;
+    name: string;
+    created_at: string;
+}

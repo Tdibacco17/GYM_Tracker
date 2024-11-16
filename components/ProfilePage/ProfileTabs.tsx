@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { FormEvent } from "react"
 import { toast } from "sonner"
-import { AccountData, UserProfileData } from "@/types/ApiProfile"
+import { AccountData, UserProfileData, UserRoutinesData } from "@/types/ApiProfile"
 import { updateProfileData } from "@/app/actions/profileActions"
 import {
     Select,
@@ -30,8 +30,10 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { calculateBenedictCalories } from "@/utils/calorieCalculator"
+import CreateRoutine from "./CreateRoutine"
+import DeleteRoutine from "./DeleteRoutine"
 
-export default function ProfileTabs({ profileData }: { profileData: UserProfileData | null }) {
+export default function ProfileTabs({ profileData, routinesData }: { profileData: UserProfileData | null, routinesData: UserRoutinesData[] | null }) {
 
     const caloriasDiarias = calculateBenedictCalories(profileData);
 
@@ -72,7 +74,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
             </TabsList>
 
             <TabsContent value="profile" className="pt-8">
-                <div className="w-full flex flex-col gap-8">
+                <div className="w-full flex flex-col gap-28">
                     <div className="grid grid-cols-2 w-full gap-8">
                         <div className="w-full flex flex-col gap-8">
                             <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0">
@@ -82,7 +84,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         Peso actual
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {profileData?.current_weight || 'Ir en configuración'}
+                                        {profileData?.current_weight && `${profileData?.current_weight} kg` || 'Ir en configuración'}
                                     </p>
                                 </div>
                             </div>
@@ -93,7 +95,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         Peso deseado
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {profileData?.desired_weight || 'Ir en configuración'}
+                                        {profileData?.desired_weight && `${profileData?.desired_weight} kg` || 'Ir en configuración'}
                                     </p>
                                 </div>
                             </div>
@@ -106,8 +108,11 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         Objetivo
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {profileData?.weight_change_goal
-                                            ? profileData.weight_change_goal * 1000
+                                        {profileData?.weight_goal && profileData?.weight_change_goal !== null
+                                            ? `${profileData.weight_goal === 'lose'
+                                                ? `- ${profileData.weight_change_goal * 1000} gm`
+                                                : `+ ${profileData.weight_change_goal * 1000} gm`
+                                            } x semana`
                                             : 'Ir en configuración'}
                                     </p>
                                 </div>
@@ -116,7 +121,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                 <div className="flex h-2 w-2 translate-y-1 rounded-full bg-[#9162c0]" />
                                 <div className="space-y-1">
                                     <p className="font-semibold leading-none tracking-tight">
-                                        Calorías diarias recomendadas
+                                        Calorías diarias
                                     </p>
                                     <p className="text-sm text-muted-foreground">
                                         {caloriasDiarias ? `${caloriasDiarias.toFixed(2)} kcal` : 'Ir en configuración'}
@@ -125,10 +130,9 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center">
-                        <Button variant={'secondary'} size={'lg'} className="font-semibold" >
-                            Crear una nueva rutina
-                        </Button>
+                    <div className="w-full flex flex-col gap-8">
+                        <CreateRoutine />
+                        <DeleteRoutine routinesData={routinesData} />
                     </div>
                 </div>
             </TabsContent>

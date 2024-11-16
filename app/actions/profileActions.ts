@@ -40,7 +40,7 @@ export async function updateProfileData(
         revalidatePath('/dashboard')
         return { message: 'Datos actualizados con exito!', status: 200, }
     } catch (error) {
-        console.error(error); // line fix build
+        console.error(error);
         return { message: `Ocurrio un error inesperado.`, status: 500 };
     }
 }
@@ -56,14 +56,14 @@ export async function getProfileData(): Promise<ApiDataResponseInterface> {
         `;
 
         const result = await pool.query(query, [session.id]);
-        
-        if (result.rowCount === 0) return { message: 'Usuario no encontrado.', status: 404, }
+
+        if (result.rowCount === 0) return { message: 'Usuario no encontrado.', status: 404, data: null }
 
         const userData: UserProfileData = result.rows[0];
 
         return { message: 'Datos actualizados con exito!', status: 200, data: userData }
     } catch (error) {
-        console.error(error); // line fix build
+        console.error(error);
         return { message: `Ocurrio un error inesperado.`, status: 500, data: null };
     }
 }
