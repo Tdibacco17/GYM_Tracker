@@ -11,6 +11,20 @@ import { SpinIcon } from "@/components/ui/icons";
 export default function Page() {
   return <Suspense fallback={<SpinIcon />}>
     <ProfilePage />
+    {/* 
+      <section className="flex flex-col items-center gap-6 relative p-4 w-full">
+
+      <div className="absolute top-0 right-0 pt-4 pr-4">
+        <SignOutButton />
+      </div>
+
+      <Presentation session={session} />
+
+      <ProfileTabs profileData={profileData.data} routinesData={routinesData.data} />
+
+    </section>
+    
+    */}
   </Suspense>
 }
 
@@ -35,5 +49,4 @@ async function ProfilePage() {
     </section>
   );
 }
-
 
