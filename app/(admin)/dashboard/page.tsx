@@ -5,9 +5,13 @@ import { getServerSession } from "next-auth";
 import { ApiDataResponseInterface } from "@/types/ApiTypes";
 import { getProfileData } from "@/app/actions/profileActions";
 import { getRoutines } from "@/app/actions/routineActions";
+import { Suspense } from "react";
+import { SpinIcon } from "@/components/ui/icons";
 
 export default function Page() {
-  return <ProfilePage />
+  return <Suspense fallback={<SpinIcon />}>
+    <ProfilePage />
+  </Suspense>
 }
 
 async function ProfilePage() {
@@ -26,7 +30,7 @@ async function ProfilePage() {
 
       <Presentation session={session} />
 
-      <ProfileTabs profileData={profileData.data} routinesData={routinesData.data}/>
+      <ProfileTabs profileData={profileData.data} routinesData={routinesData.data} />
 
     </section>
   );

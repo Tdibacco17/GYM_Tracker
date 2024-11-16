@@ -5,7 +5,7 @@ import { Suspense } from "react";
 
 export default function RoutinePage() {
     return (
-        <section className="flex flex-col relative pt-[2.5rem] -mb-4 w-full">
+        <section className="flex flex-col relative pt-[2.5rem] -mb-4 w-full h-full">
             <div className="flex flex-col justify-center fixed top-0 left-0 z-20 border-b w-full max-w-[768px] bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40">
                 <RoutinesDays />
             </div>
