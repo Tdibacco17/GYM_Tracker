@@ -3,9 +3,27 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { PlusIcon, MinusIcon, TrashIcon, Pencil2Icon, CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
+import { ExcerciseData } from "@/types/ActionsTypes";
+import parseWeight from "@/utils/parseWeight";
+import { deleteExercise } from "@/app/actions/excerciseActions";
+import { toast } from "sonner";
 
-export default function ExerciseCard({ isBorderB }: { isBorderB: boolean }) {
+export default function ExerciseCard({ isBorderB, exerciseData, routineId }: { isBorderB: boolean, exerciseData: ExcerciseData, routineId: string }) {
     const [isOpen, setIsOpen] = useState(false);
+
+    const handleDelete = async () => {
+        const response = await deleteExercise(exerciseData.id, routineId);
+
+        if (response.status === 500) {
+            toast.error(response.message);
+            return;
+        }
+        if (response.status !== 200) {
+            toast.warning(response.message)
+            return;
+        }
+        toast.success(response.message);
+    }
 
     return (
         <div className={`w-full overflow-hidden h-full px-6`}>
@@ -14,12 +32,12 @@ export default function ExerciseCard({ isBorderB }: { isBorderB: boolean }) {
                 {/* card content */}
                 <div className={`h-full w-full flex flex-col justify-between gap-12  py-8`}>
                     <div>
-                        <p className="whitespace-nowrap text-2xl font-semibold tracking-tight">Pecho plano</p>
+                        <p className="whitespace-nowrap text-2xl font-semibold tracking-tight">{exerciseData.name}</p>
                     </div>
                     <div className="flex gap-8">
-                        <p className="whitespace-nowrap text-sm text-muted-foreground">12 Repeticiones</p>
+                        <p className="whitespace-nowrap text-sm text-muted-foreground">{`${exerciseData.repetitions} repeticiones`}</p>
                         <Badge variant={'violet'} className="whitespace-nowrap">
-                            25,5 kg
+                            {`${parseWeight(exerciseData.weight)} kg`}
                         </Badge>
                     </div>
                 </div>
@@ -51,7 +69,7 @@ export default function ExerciseCard({ isBorderB }: { isBorderB: boolean }) {
                                     </div>
                                 </>
                                 : <>
-                                    <div className="h-10 w-full flex justify-center items-center cursor-pointer">
+                                    <div onClick={handleDelete} className="h-10 w-full flex justify-center items-center cursor-pointer">
                                         <TrashIcon className="h-6 w-6" />
                                     </div>
                                 </>}

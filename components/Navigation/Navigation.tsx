@@ -1,7 +1,7 @@
 import { ApiDataResponseInterface } from "@/types/ApiTypes";
 import { getFirstRoutine } from "@/app/actions/routineActions";
 import { getServerSession } from "next-auth";
-import { UserRoutinesData } from "@/types/ApiProfile";
+import { UserRoutinesData } from "@/types/ActionsTypes";
 import { NavigationClient } from "./Navigation.client";
 
 export default async function Navigation() {

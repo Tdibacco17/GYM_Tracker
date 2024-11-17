@@ -21,7 +21,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner";
-import { UserRoutinesData } from "@/types/ApiProfile";
+import { UserRoutinesData } from "@/types/ActionsTypes";
 import { deleteRoutine } from "@/app/actions/routineActions";
 import { Label } from "@/components/ui/label"
 

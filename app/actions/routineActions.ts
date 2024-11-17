@@ -1,7 +1,7 @@
 'use server'
 
 import pool from "@/lib/db";
-import { UserRoutinesData } from "@/types/ApiProfile";
+import { UserRoutinesData } from "@/types/ActionsTypes";
 import { ApiDataResponseInterface, ApiResponseInterface } from "@/types/ApiTypes";
 import { NextAuthToken } from "@/types/ModelsTypes";
 import { getSessionToken } from "@/utils/getSessionToken";

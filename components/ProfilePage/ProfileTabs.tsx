@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { FormEvent } from "react"
 import { toast } from "sonner"
-import { AccountData, UserProfileData, UserRoutinesData } from "@/types/ApiProfile"
+import { AccountData, UserProfileData, UserRoutinesData } from "@/types/ActionsTypes"
 import { updateProfileData } from "@/app/actions/profileActions"
 import {
     Select,
@@ -32,6 +32,7 @@ import {
 import { calculateBenedictCalories } from "@/utils/calorieCalculator"
 import CreateRoutine from "./CreateRoutine"
 import DeleteRoutine from "./DeleteRoutine"
+import parseWeight from "@/utils/parseWeight"
 
 export default function ProfileTabs({ profileData, routinesData }: { profileData: UserProfileData | null, routinesData: UserRoutinesData[] | null }) {
 
@@ -84,7 +85,9 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         Peso actual
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {profileData?.current_weight && `${profileData?.current_weight} kg` || 'Ir en configuración'}
+                                        {profileData?.current_weight
+                                            ? `${parseWeight(profileData.current_weight)} kg`
+                                            : 'Ir en configuración'}
                                     </p>
                                 </div>
                             </div>
@@ -95,7 +98,9 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         Peso deseado
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {profileData?.desired_weight && `${profileData?.desired_weight} kg` || 'Ir en configuración'}
+                                        {profileData?.desired_weight
+                                            ? `${parseWeight(profileData.desired_weight)} kg`
+                                            : 'Ir en configuración'}
                                     </p>
                                 </div>
                             </div>
@@ -105,14 +110,14 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                 <div className="flex h-2 w-2 translate-y-1 rounded-full bg-[#9162c0]" />
                                 <div className="space-y-1">
                                     <p className="font-semibold leading-none tracking-tight">
-                                        Objetivo
+                                        Objetivo semanal
                                     </p>
                                     <p className="text-sm text-muted-foreground">
                                         {profileData?.weight_goal && profileData?.weight_change_goal !== null
                                             ? `${profileData.weight_goal === 'lose'
-                                                ? `- ${profileData.weight_change_goal * 1000} gm`
-                                                : `+ ${profileData.weight_change_goal * 1000} gm`
-                                            } x semana`
+                                                ? `Bajar ${profileData.weight_change_goal * 1000} kg`
+                                                : `Subir ${profileData.weight_change_goal * 1000} kg`
+                                            }`
                                             : 'Ir en configuración'}
                                     </p>
                                 </div>
@@ -124,7 +129,7 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         Calorías diarias
                                     </p>
                                     <p className="text-sm text-muted-foreground">
-                                        {caloriasDiarias ? `${caloriasDiarias.toFixed(2)} kcal` : 'Ir en configuración'}
+                                        {caloriasDiarias ? `${caloriasDiarias} kcal` : 'Ir en configuración'}
                                     </p>
                                 </div>
                             </div>
@@ -211,6 +216,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         step="0.1"
                                         min="0.1"
                                         defaultValue={profileData?.weight_change_goal || ''}
+                                        onInvalid={(e) =>
+                                            e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
+                                        }
+                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
                                     />
                                 </div>
                             </div>
@@ -225,6 +234,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         step="0.1"
                                         min="1"
                                         defaultValue={profileData?.height || ''}
+                                        onInvalid={(e) =>
+                                            e.currentTarget.setCustomValidity("La altura debe ser mayor a 0.")
+                                        }
+                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-2 justify-between">
@@ -236,6 +249,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         type="number"
                                         min="1"
                                         defaultValue={profileData?.age || ''}
+                                        onInvalid={(e) =>
+                                            e.currentTarget.setCustomValidity("La edad debe ser mayor a 0.")
+                                        }
+                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
                                     />
                                 </div>
                             </div>
@@ -250,6 +267,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         step="0.1"
                                         min="0.1"
                                         defaultValue={profileData?.current_weight || ''}
+                                        onInvalid={(e) =>
+                                            e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
+                                        }
+                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-2 justify-between">
@@ -262,6 +283,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                         step="0.1"
                                         min="0.1"
                                         defaultValue={profileData?.desired_weight || ''}
+                                        onInvalid={(e) =>
+                                            e.currentTarget.setCustomValidity("El peso deseado debe ser mayor a 0.")
+                                        }
+                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
                                     />
                                 </div>
                             </div>

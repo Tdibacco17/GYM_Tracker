@@ -1,6 +1,6 @@
-import { UserProfileData } from "@/types/ApiProfile";
+import { UserProfileData } from "@/types/ActionsTypes";
 
-export const calculateBenedictCalories = (profileData: UserProfileData | null): number | null => {
+export const calculateBenedictCalories = (profileData: UserProfileData | null): string | null => {
     if (!profileData) return null;
 
     const { current_weight, height, age, gender, daily_activity, weight_goal, weight_change_goal } = profileData;
@@ -53,5 +53,8 @@ export const calculateBenedictCalories = (profileData: UserProfileData | null): 
         ajusteCalorico = (weight_change_goal * 7700) / 7; // Superávit calórico diario
     }
 
-    return caloriasMantenimiento + ajusteCalorico;
+    const caloriasFinales = caloriasMantenimiento + ajusteCalorico;
+
+    // Retornar el valor formateado con 2 decimales como string
+    return caloriasFinales.toFixed(2);
 };

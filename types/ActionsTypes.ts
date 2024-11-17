@@ -28,3 +28,18 @@ export interface UserRoutinesData {
     name: string;
     created_at: string;
 }
+
+// Post new excersis
+export interface NewExerciseData {
+    routineId: string,
+    name: string;
+    repetitions: number;
+    weight: number;
+}
+
+export interface ExcerciseData {
+    id: string,
+    name: string;
+    repetitions: number;
+    weight: number;
+}

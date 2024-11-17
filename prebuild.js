@@ -71,24 +71,19 @@ const createTables = async () => {
                 FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
             );
 
-            CREATE TABLE IF NOT EXISTS exercises (
-                id TEXT PRIMARY KEY,
-                name VARCHAR(50) NOT NULL
-            );
-
             CREATE TABLE IF NOT EXISTS routines (
                 id TEXT PRIMARY KEY,
                 name VARCHAR(50) NOT NULL,
                 user_id TEXT REFERENCES users(id) ON DELETE CASCADE,
                 created_at TIMESTAMPTZ DEFAULT NOW()
-            );
+            );  
 
-            CREATE TABLE IF NOT EXISTS routine_exercises (
-                id TEXT PRIMARY KEY,
-                routine_id TEXT REFERENCES routines(id) ON DELETE CASCADE,
-                exercise_id TEXT REFERENCES exercises(id) ON DELETE CASCADE,
-                repetitions INT NOT NULL,
-                weight DECIMAL(5, 2) NOT NULL
+            CREATE TABLE IF NOT EXISTS exercises (
+                    id TEXT PRIMARY KEY,
+                    name VARCHAR(50) NOT NULL,
+                    repetitions INT NOT NULL,
+                    weight DECIMAL(5, 2) NOT NULL,
+                    routine_id TEXT REFERENCES routines(id) ON DELETE CASCADE
             );
         `;
 
@@ -108,9 +103,8 @@ const dropTables = async () => {
     try {
         console.log('Dropping tables...');
         const dropTablesQuery = `
-            DROP TABLE IF EXISTS routine_exercises CASCADE;
-            DROP TABLE IF EXISTS routines CASCADE;
             DROP TABLE IF EXISTS exercises CASCADE;
+            DROP TABLE IF EXISTS routines CASCADE;
             DROP TABLE IF EXISTS user_profiles CASCADE;
             DROP TABLE IF EXISTS users CASCADE;
         `;
@@ -126,7 +120,7 @@ const dropTables = async () => {
 
 (async () => {
     try {
-        await createTables();
+        // await createTables();
         // await dropTables();
     } catch (error) {
         console.error('Error occurred:', error.message);

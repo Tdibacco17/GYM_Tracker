@@ -1,4 +1,5 @@
-import { UserRoutinesData } from "@/types/ApiProfile"
+import { UserRoutinesData } from "@/types/ActionsTypes"
+import Link from "next/link"
 
 export default function RoutinesDays({ routinesData }: { routinesData: UserRoutinesData[] | null }) {
 
@@ -9,9 +10,9 @@ export default function RoutinesDays({ routinesData }: { routinesData: UserRouti
                     const isActive = index === 0
 
                     return (
-                        <p key={index} className={`${isActive ? "text-[#9162c0] font-semibold" : "text-muted-foreground"} font-semibold whitespace-nowrap text-left`}>
+                        <Link href={`/dashboard/routines/${routineData.id}`} key={index} className={`${isActive ? "text-[#9162c0] font-semibold" : "text-muted-foreground"} font-semibold whitespace-nowrap text-left`}>
                             {routineData.name}
-                        </p>
+                        </Link>
                     )
                 })
                 : <p className="text-sm text-muted-foreground font-semibold whitespace-nowrap text-left">

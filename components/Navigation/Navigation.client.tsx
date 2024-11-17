@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 export function NavigationClient({ linkText }: { linkText: string }) {
     const pathname = usePathname()
     const isProfile = pathname === "/dashboard"
-    const isRoutines = pathname === "/dashboard/routines"
+    const isRoutines = pathname.startsWith("/dashboard/routines");
 
     return (
         <>
