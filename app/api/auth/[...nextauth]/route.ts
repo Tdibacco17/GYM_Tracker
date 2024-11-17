@@ -2,7 +2,7 @@ import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
 import pool from "@/lib/db";
 import { compare } from "@/utils/bcrypt";
-import { User } from "@/types/ModelsTypes";
+import { User } from "@/types/SessionTypes";
 
 const handler = NextAuth({
     providers: [

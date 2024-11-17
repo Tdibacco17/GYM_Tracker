@@ -1,13 +1,5 @@
 'use client'
 import { FormEvent, useState } from "react";
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
     AlertDialog,
@@ -21,17 +13,19 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { toast } from "sonner";
-import { UserRoutinesData } from "@/types/ActionsTypes";
-import { deleteRoutine } from "@/app/actions/routineActions";
-import { Label } from "@/components/ui/label"
+import { deleteRoutine, getFirstRoutine } from "@/app/actions/routineActions";
+import { useRouter } from "next/navigation";
+import { ApiDataResponseInterface, UserRoutinesData } from "@/types/ActionsTypes";
+import { SpinIcon } from "../ui/icons";
 
-export default function DeleteRoutine({ routinesData }: { routinesData: UserRoutinesData[] | null }) {
-    const [selectedValue, setSelectedValue] = useState<string>("");
+export default function DeleteRoutine({ routineId }: { routineId: string }) {
+    const router = useRouter();
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleDelete = async (e: FormEvent) => {
         e.preventDefault();
-
-        const response = await deleteRoutine(selectedValue)
+        setLoading(true)
+        const response = await deleteRoutine(routineId)
 
         if (response.status === 500) {
             toast.error(response.message);
@@ -43,33 +37,24 @@ export default function DeleteRoutine({ routinesData }: { routinesData: UserRout
             return;
         }
         toast.success(response.message);
-        setSelectedValue("");
+        const responsePush: ApiDataResponseInterface = await getFirstRoutine()
+        const data: UserRoutinesData | null = responsePush.data;
+
+        if (response.status === 200 && data) {
+            router.push(`/dashboard/routines/${data.id}`)
+        } else {
+            router.push('/dashboard');
+        }
     }
 
     return (
         <div className="flex justify-between items-end w-full gap-8">
-            <div className="flex flex-col gap-2 justify-between w-full">
-                <Label >Eliminar una rutina</Label>
-                {routinesData && routinesData?.length > 0
-                    ? <Select onValueChange={setSelectedValue} value={selectedValue || ""}>
-                        <SelectTrigger>
-                            <SelectValue placeholder={`Seleccionar especialidad`} />
-                        </SelectTrigger>
-                        <SelectContent className="!min-w-full !w-full">
-                            <SelectGroup >
-                                {routinesData?.map((item: UserRoutinesData, index: number) => {
-                                    return <SelectItem key={index} value={`${item.id}`}>
-                                        {item.name}
-                                    </SelectItem>
-                                })}
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                    : <p className="py-2 h-9 text-muted-foreground text-sm">No hay existencias.</p>}
-            </div>
             <AlertDialog >
                 <AlertDialogTrigger asChild>
-                    <Button disabled={selectedValue === ""} size={'lg'} type="button" variant={"destructive"} >Eliminar</Button>
+                    <Button disabled={loading} variant={'outline'}
+                        className="flex items-center justify-center gap-2 h-9 w-[100px] min-w-[100px] max-w-[100px]" size={'sm'}>
+                        {loading ? <SpinIcon /> : 'Borrar rutina'}
+                    </Button>
                 </AlertDialogTrigger>
                 <AlertDialogContent>
                     <AlertDialogHeader>

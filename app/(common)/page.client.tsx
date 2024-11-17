@@ -94,10 +94,7 @@ export default function LoginPageClient() {
                 </CardContent>
                 <CardFooter className="flex flex-col justify-between gap-4 w-full relative">
                     <Button disabled={loading} type="submit" className="w-full flex justify-center items-center relative" variant={'violetPrimary'}>
-                        {loading && <div className="absolute left-0 flex justify-center items-center w-full h-full pointer-events-none -ml-14">
-                            <SpinIcon />
-                        </div>}
-                        Continuar
+                        {loading ? <SpinIcon /> : 'Continuar'}
                     </Button>
                     {errorMessage && <small className="absolute -bottom-4 text-sm text-red-800 whitespace-nowrap font-semibold">{errorMessage}</small>}
                 </CardFooter>

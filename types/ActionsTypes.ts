@@ -22,6 +22,14 @@ export interface AccountData {
     weightChangeGoal: number | null
 }
 
+// New routine
+export interface NewRoutineData {
+    id: string;
+    name: string;
+    user_id: string,
+    created_at: string;
+}
+
 // Get routines 
 export interface UserRoutinesData {
     id: string;
@@ -29,7 +37,7 @@ export interface UserRoutinesData {
     created_at: string;
 }
 
-// Post new excersis
+// Post new exercise
 export interface NewExerciseData {
     routineId: string,
     name: string;
@@ -37,9 +45,21 @@ export interface NewExerciseData {
     weight: number;
 }
 
+// Get ExcerciseData
 export interface ExcerciseData {
     id: string,
     name: string;
     repetitions: number;
     weight: number;
+}
+
+// Resputa sin data
+export interface ApiResponseInterface {
+    message: string,
+    status: number,
+}
+
+// Resputa con data
+export interface ApiDataResponseInterface extends ApiResponseInterface {
+    data?: any | null
 }

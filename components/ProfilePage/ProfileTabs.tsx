@@ -16,9 +16,9 @@ import {
     TabsTrigger,
 } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
-import { FormEvent } from "react"
+import { FormEvent, useState } from "react"
 import { toast } from "sonner"
-import { AccountData, UserProfileData, UserRoutinesData } from "@/types/ActionsTypes"
+import { AccountData, UserProfileData } from "@/types/ActionsTypes"
 import { updateProfileData } from "@/app/actions/profileActions"
 import {
     Select,
@@ -30,17 +30,18 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { calculateBenedictCalories } from "@/utils/calorieCalculator"
-import CreateRoutine from "./CreateRoutine"
-import DeleteRoutine from "./DeleteRoutine"
 import parseWeight from "@/utils/parseWeight"
+import CreateRoutine from "./CreateRoutine"
+import { SpinIcon } from "../ui/icons"
 
-export default function ProfileTabs({ profileData, routinesData }: { profileData: UserProfileData | null, routinesData: UserRoutinesData[] | null }) {
+export default function ProfileTabs({ profileData }: { profileData: UserProfileData | null }) {
+    const [loading, setLoading] = useState<boolean>(false);
 
     const caloriasDiarias = calculateBenedictCalories(profileData);
 
     const handleUpdate = async (e: FormEvent) => {
         e.preventDefault();
-
+        setLoading(true)
         const formData = new FormData(e.currentTarget as HTMLFormElement);
 
         const accountData: AccountData = {
@@ -64,6 +65,7 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
             toast.warning(response.message)
             return;
         }
+        setLoading(false)
         toast.success(response.message);
     }
 
@@ -77,8 +79,8 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
             <TabsContent value="profile" className="pt-8">
                 <div className="w-full flex flex-col gap-28">
                     <div className="grid grid-cols-2 w-full gap-8">
-                        <div className="w-full flex flex-col gap-8">
-                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0">
+                        <div className="w-full flex flex-col justify-between gap-8">
+                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0 min-h-[72px]">
                                 <div className="flex h-2 w-2 translate-y-1 rounded-full bg-[#9162c0]" />
                                 <div className="space-y-1">
                                     <p className="font-semibold leading-none tracking-tight">
@@ -91,7 +93,7 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                     </p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0">
+                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0 min-h-[72px]">
                                 <div className="flex h-2 w-2 translate-y-1 rounded-full bg-[#9162c0]" />
                                 <div className="space-y-1">
                                     <p className="font-semibold leading-none tracking-tight">
@@ -105,8 +107,8 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                 </div>
                             </div>
                         </div>
-                        <div className="w-full flex flex-col gap-8">
-                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0">
+                        <div className="w-full flex flex-col justify-between gap-8">
+                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0 min-h-[72px]">
                                 <div className="flex h-2 w-2 translate-y-1 rounded-full bg-[#9162c0]" />
                                 <div className="space-y-1">
                                     <p className="font-semibold leading-none tracking-tight">
@@ -122,7 +124,7 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                     </p>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0">
+                            <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0 min-h-[72px]">
                                 <div className="flex h-2 w-2 translate-y-1 rounded-full bg-[#9162c0]" />
                                 <div className="space-y-1">
                                     <p className="font-semibold leading-none tracking-tight">
@@ -135,9 +137,8 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                             </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-col gap-8">
+                    <div className="w-full">
                         <CreateRoutine />
-                        <DeleteRoutine routinesData={routinesData} />
                     </div>
                 </div>
             </TabsContent>
@@ -220,6 +221,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                             e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
+                                        onChange={(e) => {
+                                            const value = e.currentTarget.value.replace(',', '.');
+                                            e.currentTarget.value = value;
+                                        }}
                                     />
                                 </div>
                             </div>
@@ -271,6 +276,10 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                             e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
+                                        onChange={(e) => {
+                                            const value = e.currentTarget.value.replace(',', '.');
+                                            e.currentTarget.value = value;
+                                        }}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-2 justify-between">
@@ -287,12 +296,18 @@ export default function ProfileTabs({ profileData, routinesData }: { profileData
                                             e.currentTarget.setCustomValidity("El peso deseado debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
+                                        onChange={(e) => {
+                                            const value = e.currentTarget.value.replace(',', '.');
+                                            e.currentTarget.value = value;
+                                        }}
                                     />
                                 </div>
                             </div>
                         </CardContent>
-                        <CardFooter className="p-0 pt-12">
-                            <Button type="submit" variant={'violetPrimary'} className="w-full">Guardar cambios</Button>
+                        <CardFooter className="p-0 pt-12 flex justify-end">
+                            <Button disabled={loading} type="submit" variant={'violetPrimary'} className="w-full font-semibold">
+                                {loading ? <SpinIcon /> : 'Guardar cambios'}
+                            </Button>
                         </CardFooter>
                     </form>
                 </Card>

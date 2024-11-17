@@ -5,15 +5,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
+import { SpinIcon } from "../ui/icons"
 
 export default function CreateRoutine() {
     const [routineName, setRoutineName] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleCreateRoutine = async () => {
         if (!routineName.trim()) {
             return
         }
-
+        setLoading(true);
         const response = await createRoutine(routineName);
 
         if (response.status === 500) {
@@ -24,39 +26,38 @@ export default function CreateRoutine() {
             toast.warning(response.message)
             return;
         }
+        setLoading(false);
         toast.success(response.message);
         setRoutineName('')
     }
 
 
     return (
-        <div className="flex justify-between w-full gap-8">
-            <div className="flex flex-col gap-2 justify-between w-full">
-                <Label htmlFor="routine-name">Crear una nueva rutina</Label>
-                <div className="flex flex-col gap-2 justify-between">
-                    <Label htmlFor="routine-name">Este input es para crear una nueva rutina</Label>
-                    <Input
-                        id="routine-name"
-                        name="routineName"
-                        placeholder="Nombre de la rutina"
-                        type="text"
-                        value={routineName}
-                        className="w-full"
-                        onChange={(e) => setRoutineName(e.target.value)}
-                        required
-                        onInvalid={(e) =>
-                            e.currentTarget.setCustomValidity("Por favor, ingrese un nombre para la rutina.")
-                        }
-                        onInput={(e) => e.currentTarget.setCustomValidity("")}
-                    />
-                </div>
-
+        <div className="flex flex-col w-full gap-2">
+            <div>
+                <Label htmlFor="routine-name" className="font-semibold leading-none tracking-tight text-base">
+                    Crear una nueva rutina
+                </Label>
             </div>
-            <div className="flex items-end">
-                <Button disabled={routineName.trim().length === 0} variant={'secondary'} size={'lg'} className="font-semibold"
-                    onClick={handleCreateRoutine}
+            <div className="flex gap-8 w-full">
+                <Input
+                    id="routine-name"
+                    name="routineName"
+                    placeholder="Nombre de la rutina"
+                    type="text"
+                    value={routineName}
+                    className="w-full"
+                    onChange={(e) => setRoutineName(e.target.value)}
+                    required
+                    onInvalid={(e) =>
+                        e.currentTarget.setCustomValidity("Por favor, ingrese un nombre para la rutina.")
+                    }
+                    onInput={(e) => e.currentTarget.setCustomValidity("")}
+                />
+                <Button disabled={routineName.trim().length === 0 || loading} variant={'violetPrimary'} size={'lg'}
+                    className="font-semibold w-[110px] min-w-[110px] max-w-[110px]" onClick={handleCreateRoutine}
                 >
-                    Crear
+                    {loading ? <SpinIcon /> : 'Crear'}
                 </Button>
             </div>
         </div>

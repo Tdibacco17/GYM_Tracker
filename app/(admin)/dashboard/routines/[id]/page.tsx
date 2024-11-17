@@ -1,15 +1,14 @@
 import { getExercisesByRoutine } from "@/app/actions/excerciseActions";
+import FallbackRoutineCards from "@/components/Fallbacks/FallbackRoutineCards";
 import ExerciseCard from "@/components/RoutinesPage/ExerciseCard";
 import RoutinesButtons from "@/components/RoutinesPage/RoutinesButtons";
-import { SpinIcon } from "@/components/ui/icons";
-import { ExcerciseData } from "@/types/ActionsTypes";
-import { ApiDataResponseInterface } from "@/types/ApiTypes";
+import { ApiDataResponseInterface, ExcerciseData } from "@/types/ActionsTypes";
 import { Suspense } from "react";
 
 export default function RoutineIdPage({ params }: { params: { id: string } }) {
 
     return (
-        <Suspense fallback={<SpinIcon />}>
+        <Suspense fallback={<FallbackRoutineCards />}>
             <AsyncExercises routineId={params.id} />
         </Suspense>
     )

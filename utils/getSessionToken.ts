@@ -2,7 +2,7 @@
 import { getToken } from "next-auth/jwt";
 import { cookies } from 'next/headers';
 import { compare } from "./bcrypt";
-import { NextAuthToken } from "@/types/ModelsTypes";
+import { NextAuthToken } from "@/types/SessionTypes";
 
 export async function getSessionToken(): Promise<NextAuthToken | null> {
     try {

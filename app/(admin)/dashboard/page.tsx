@@ -2,12 +2,11 @@ import Presentation from "@/components/ProfilePage/Presentation";
 import ProfileTabs from "@/components/ProfilePage/ProfileTabs";
 import SignOutButton from "@/components/SignOutButton/SignOutButton";
 import { getServerSession } from "next-auth";
-import { ApiDataResponseInterface } from "@/types/ApiTypes";
 import { getProfileData } from "@/app/actions/profileActions";
-import { getRoutines } from "@/app/actions/routineActions";
 import { Suspense } from "react";
 import FallbackPresentation from "@/components/Fallbacks/FallbackPresentation";
 import FallbackProfileTabs from "@/components/Fallbacks/FallbackProfileTabs";
+import { ApiDataResponseInterface } from "@/types/ActionsTypes";
 
 export default function DashboardPage() {
 
@@ -42,7 +41,6 @@ async function AsyncProfileTabs() {
   if (!session) return null
 
   const profileData: ApiDataResponseInterface = await getProfileData()
-  const routinesData: ApiDataResponseInterface = await getRoutines();
 
-  return <ProfileTabs profileData={profileData.data} routinesData={routinesData.data} />
+  return <ProfileTabs profileData={profileData.data} />
 }

@@ -1,5 +1,5 @@
 'use client'
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { PlusIcon, MinusIcon, TrashIcon, Pencil2Icon, CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
@@ -7,11 +7,28 @@ import { ExcerciseData } from "@/types/ActionsTypes";
 import parseWeight from "@/utils/parseWeight";
 import { deleteExercise } from "@/app/actions/excerciseActions";
 import { toast } from "sonner";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
-export default function ExerciseCard({ isBorderB, exerciseData, routineId }: { isBorderB: boolean, exerciseData: ExcerciseData, routineId: string }) {
+export default function ExerciseCard({
+    isBorderB, exerciseData, routineId
+}: {
+    isBorderB: boolean, exerciseData: ExcerciseData, routineId: string
+}) {
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handleDelete = async () => {
+        setLoading(true)
         const response = await deleteExercise(exerciseData.id, routineId);
 
         if (response.status === 500) {
@@ -69,9 +86,31 @@ export default function ExerciseCard({ isBorderB, exerciseData, routineId }: { i
                                     </div>
                                 </>
                                 : <>
-                                    <div onClick={handleDelete} className="h-10 w-full flex justify-center items-center cursor-pointer">
-                                        <TrashIcon className="h-6 w-6" />
-                                    </div>
+                                    <AlertDialog >
+                                        <AlertDialogTrigger asChild>
+                                            <Button disabled={loading} variant={'hidden'} size={'hidden'}
+                                                className="h-10 w-full flex justify-center items-center cursor-pointer ">
+                                                <TrashIcon className="h-6 w-6" />
+                                            </Button>
+                                        </AlertDialogTrigger>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle>Atención</AlertDialogTitle>
+                                                <AlertDialogDescription>
+                                                    Seguro que quieres eliminar este ejercicio?
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter className="w-full flex flex-row justify-center items-end gap-6">
+                                                <AlertDialogCancel type="button" className="w-full">Cancelar</AlertDialogCancel>
+                                                <form onSubmit={handleDelete} className="w-full">
+                                                    <AlertDialogAction type="submit"
+                                                        className={buttonVariants({ variant: 'destructive', className: 'w-full' })}>
+                                                        Eliminar
+                                                    </AlertDialogAction>
+                                                </form>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </AlertDialog>
                                 </>}
                         </div>
                         <div className={`relative flex flex-col items-end justify-center gap-6 h-full w-full`}>

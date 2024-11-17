@@ -1,9 +1,8 @@
 'use server'
 
 import pool from "@/lib/db";
-import { UserRoutinesData } from "@/types/ActionsTypes";
-import { ApiDataResponseInterface, ApiResponseInterface } from "@/types/ApiTypes";
-import { NextAuthToken } from "@/types/ModelsTypes";
+import { ApiDataResponseInterface, ApiResponseInterface, NewRoutineData, UserRoutinesData } from "@/types/ActionsTypes";
+import { NextAuthToken } from "@/types/SessionTypes";
 import { getSessionToken } from "@/utils/getSessionToken";
 import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
@@ -32,7 +31,9 @@ export async function createRoutine(routineName: string): Promise<ApiResponseInt
             return { message: "No se pudo crear la rutina.", status: 500 };
         }
 
-        revalidatePath('/dashboard')
+        const newRoutine: NewRoutineData = result.rows[0]
+
+        revalidatePath(`/dashboard/routines/${newRoutine.id}`);
         return { message: "Rutina creada con éxito!", status: 200 };
     } catch (error) {
         console.error(error); // line fix build
@@ -117,7 +118,8 @@ export async function deleteRoutine(routineId: string): Promise<ApiResponseInter
         const deleteResult = await pool.query(deleteQuery, [routineId]);
 
         if (deleteResult.rowCount === 0) { return { message: "No se pudo eliminar la rutina.", status: 500 }; }
-        revalidatePath('/dashboard')
+
+        revalidatePath(`/dashboard/routines/${routineId}`);
         return { message: "Rutina eliminada con éxito.", status: 200 };
     } catch (error) {
         console.error("Error al eliminar rutina:", error);

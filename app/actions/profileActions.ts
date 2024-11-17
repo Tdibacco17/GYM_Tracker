@@ -1,9 +1,8 @@
 'use server'
 
 import pool from "@/lib/db";
-import { AccountData, UserProfileData } from "@/types/ActionsTypes";
-import { ApiDataResponseInterface, ApiResponseInterface } from "@/types/ApiTypes";
-import { NextAuthToken } from "@/types/ModelsTypes";
+import { AccountData, ApiDataResponseInterface, ApiResponseInterface, UserProfileData } from "@/types/ActionsTypes";
+import { NextAuthToken } from "@/types/SessionTypes";
 import { getSessionToken } from "@/utils/getSessionToken";
 import { revalidatePath } from "next/cache";
 

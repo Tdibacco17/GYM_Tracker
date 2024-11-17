@@ -1,5 +1,6 @@
-import { Button } from "../ui/button";
+import DeleteRoutine from "./DeleteRoutine";
 import ExerciseCreate from "./ExerciseCreate";
+
 
 export default function RoutinesButtons({ routineId }: { routineId: string }) {
 
@@ -8,12 +9,10 @@ export default function RoutinesButtons({ routineId }: { routineId: string }) {
             <div className="w-full h-full">
                 <div className="w-full h-full flex justify-between items-center">
                     <div className="flex justify-start gap-4 w-full">
-                        <Button variant={'outline'} size={'sm'}>
-                            Borrar rutina
-                        </Button>
+                        <DeleteRoutine routineId={routineId} />
                     </div>
                     <div className="flex justify-end gap-4 w-full">
-                        <ExerciseCreate routineId={routineId}/>
+                        <ExerciseCreate routineId={routineId} />
                     </div>
                 </div>
             </div>

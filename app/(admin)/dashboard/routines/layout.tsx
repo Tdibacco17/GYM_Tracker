@@ -1,7 +1,7 @@
 import { getRoutines } from "@/app/actions/routineActions";
 import FallbackRoutines from "@/components/Fallbacks/FallbackRoutines";
 import RoutinesDays from "@/components/RoutinesPage/RoutinesDays";
-import { ApiDataResponseInterface } from "@/types/ApiTypes";
+import { ApiDataResponseInterface } from "@/types/ActionsTypes";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
 
