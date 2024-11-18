@@ -77,7 +77,7 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
             </TabsList>
 
             <TabsContent value="profile" className="pt-8">
-                <div className="w-full flex flex-col gap-8">
+                <div className="w-full flex flex-col gap-6">
                     <div className="grid grid-cols-2 w-full gap-8">
                         <div className="w-full flex flex-col justify-between gap-8">
                             <div className="grid grid-cols-[25px_1fr] items-start last:mb-0 last:pb-0 min-h-[72px]">

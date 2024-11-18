@@ -7,7 +7,7 @@ export default function RoutinesDays({ routinesData }: { routinesData: UserRouti
     const pathname = usePathname();
 
     return (
-        <div className="flex flex-row items-center justify-start w-full overflow-x-scroll no-scrollbar overflow-y-hidden px-6 py-6 gap-12">
+        <div className="flex flex-row items-center justify-start w-full overflow-x-scroll no-scrollbar overflow-y-hidden px-6 py-6 gap-8">
             {routinesData ?
                 routinesData?.map((routineData, index) => {
                     const isActive = pathname === `/dashboard/routines/${routineData.id}`;
