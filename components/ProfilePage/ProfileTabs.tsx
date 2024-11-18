@@ -221,10 +221,6 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                             e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
-                                        onChange={(e) => {
-                                            const value = e.currentTarget.value.replace(',', '.');
-                                            e.currentTarget.value = value;
-                                        }}
                                     />
                                 </div>
                             </div>
@@ -276,10 +272,6 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                             e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
-                                        onChange={(e) => {
-                                            const value = e.currentTarget.value.replace(',', '.');
-                                            e.currentTarget.value = value;
-                                        }}
                                     />
                                 </div>
                                 <div className="flex flex-col gap-2 justify-between">
@@ -296,10 +288,6 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                             e.currentTarget.setCustomValidity("El peso deseado debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
-                                        onChange={(e) => {
-                                            const value = e.currentTarget.value.replace(',', '.');
-                                            e.currentTarget.value = value;
-                                        }}
                                     />
                                 </div>
                             </div>
@@ -312,7 +300,6 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                     </form>
                 </Card>
             </TabsContent>
-
         </Tabs>
     )
 }

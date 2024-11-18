@@ -134,10 +134,6 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
                                             e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
                                         }
                                         onInput={(e) => e.currentTarget.setCustomValidity("")}
-                                        onChange={(e) => {
-                                            const value = e.currentTarget.value.replace(',', '.');
-                                            e.currentTarget.value = value;
-                                        }}
                                     />
                                 </div>
                             </div>
