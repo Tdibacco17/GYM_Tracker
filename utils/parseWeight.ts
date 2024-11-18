@@ -4,7 +4,8 @@ export default function parseWeight(weight: string | number): string {
 
     // Validar si es un número válido
     if (isNaN(numericWeight)) {
-        throw new Error("El valor proporcionado no es un número válido.");
+        console.log("El valor proporcionado no es un número válido.");
+        return '0'
     }
 
     // Redondear a 1 decimal máximo y convertir a string para el resultado final

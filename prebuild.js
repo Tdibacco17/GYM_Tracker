@@ -79,11 +79,11 @@ const createTables = async () => {
             );  
 
             CREATE TABLE IF NOT EXISTS exercises (
-                    id TEXT PRIMARY KEY,
-                    name VARCHAR(50) NOT NULL,
-                    repetitions INT NOT NULL,
-                    weight DECIMAL(5, 2) NOT NULL,
-                    routine_id TEXT REFERENCES routines(id) ON DELETE CASCADE
+                id TEXT PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                repetitions INT NOT NULL,
+                weight DECIMAL(5, 2) NOT NULL,
+                routine_id TEXT REFERENCES routines(id) ON DELETE CASCADE
             );
         `;
 

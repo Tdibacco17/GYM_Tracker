@@ -53,6 +53,12 @@ export interface ExcerciseData {
     weight: number;
 }
 
+// Update Values Excercise
+export interface UpdateValuesExercise {
+    repetitions: number | null;
+    weight: number | null
+}
+
 // Resputa sin data
 export interface ApiResponseInterface {
     message: string,

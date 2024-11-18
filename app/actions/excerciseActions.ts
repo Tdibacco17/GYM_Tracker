@@ -76,7 +76,7 @@ export async function getExercisesByRoutine(routineId: string): Promise<ApiDataR
         const exercisesResult = await pool.query(getExercisesQuery, [routineId]);
 
         if (exercisesResult.rowCount === 0) {
-            return { message: 'No se encontraron ejercicios para esta rutina.', status: 404, data: null };
+            return { message: 'No se encontraron ejercicios para esta rutina.', status: 400, data: null };
         }
 
         const exercises: ExcerciseData[] = exercisesResult.rows;
@@ -114,7 +114,7 @@ export async function deleteExercise(exerciseId: string, routineId: string): Pro
         if (result.rowCount === 0) {
             return { status: 404, message: "Ejercicio no encontrado o ya eliminado." };
         }
-        
+
         revalidatePath(`/dashboard/routines/${routineId}`);
         return { status: 200, message: "Ejercicio eliminado correctamente." };
     } catch (error) {

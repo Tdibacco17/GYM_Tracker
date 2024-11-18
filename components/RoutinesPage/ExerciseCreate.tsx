@@ -57,9 +57,9 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
         if (exerciseRef.current) exerciseRef.current.value = "";
         if (repetitionsRef.current) repetitionsRef.current.value = "";
         if (weightRef.current) weightRef.current.value = "";
-        toast.success(response.message);
         setIsOpen(!isOpen)
         setLoading(false)
+        toast.success(response.message);
     }
 
     useEffect(() => {

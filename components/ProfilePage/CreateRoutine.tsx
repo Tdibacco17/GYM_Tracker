@@ -27,8 +27,8 @@ export default function CreateRoutine() {
             return;
         }
         setLoading(false);
-        toast.success(response.message);
         setRoutineName('')
+        toast.success(response.message);
     }
 
 

@@ -36,7 +36,6 @@ export default function DeleteRoutine({ routineId }: { routineId: string }) {
             toast.warning(response.message);
             return;
         }
-        toast.success(response.message);
         const responsePush: ApiDataResponseInterface = await getFirstRoutine()
         const data: UserRoutinesData | null = responsePush.data;
 
@@ -45,6 +44,7 @@ export default function DeleteRoutine({ routineId }: { routineId: string }) {
         } else {
             router.push('/dashboard');
         }
+        toast.success(response.message);
     }
 
     return (

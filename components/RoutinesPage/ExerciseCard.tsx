@@ -3,7 +3,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { PlusIcon, MinusIcon, TrashIcon, Pencil2Icon, CheckIcon, Cross2Icon } from "@radix-ui/react-icons";
-import { ExcerciseData } from "@/types/ActionsTypes";
+import { ExcerciseData, UpdateValuesExercise } from "@/types/ActionsTypes";
 import parseWeight from "@/utils/parseWeight";
 import { deleteExercise } from "@/app/actions/excerciseActions";
 import { toast } from "sonner";
@@ -18,6 +18,8 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { SpinIcon } from "../ui/icons";
+import { updateExercise } from "@/app/actions/routineActions";
 
 export default function ExerciseCard({
     isBorderB, exerciseData, routineId
@@ -25,10 +27,18 @@ export default function ExerciseCard({
     isBorderB: boolean, exerciseData: ExcerciseData, routineId: string
 }) {
     const [isOpen, setIsOpen] = useState(false);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loadingDelete, setLoadingDelete] = useState<boolean>(false);
+    const [loadingUpdate, setLoadingUpdate] = useState<boolean>(false);
+    const [repetitions, setRepetitions] = useState<number>(exerciseData.repetitions)
+    const [weight, setWeight] = useState<number>(() => { return parseFloat(parseWeight(exerciseData.weight)); });
+
+    const handleCloseEdit = () => {
+        setIsOpen(!isOpen)
+        setRepetitions(exerciseData.repetitions)
+    }
 
     const handleDelete = async () => {
-        setLoading(true)
+        setLoadingDelete(true)
         const response = await deleteExercise(exerciseData.id, routineId);
 
         if (response.status === 500) {
@@ -41,6 +51,49 @@ export default function ExerciseCard({
         }
         toast.success(response.message);
     }
+
+    const handleUpdateValues = async () => {
+        const updates: UpdateValuesExercise = {
+            repetitions: repetitions !== exerciseData.repetitions ? repetitions : null,
+            weight: weight !== parseFloat(parseWeight(exerciseData.weight)) ? weight : null,
+        };
+
+        if (!updates.repetitions && !updates.weight) {
+            setIsOpen(!isOpen);
+            return;
+        }
+
+        setLoadingUpdate(true)
+        const response = await updateExercise(routineId, exerciseData.id, updates);
+
+        if (response.status === 500) {
+            toast.error(response.message);
+            return;
+        }
+        if (response.status !== 200) {
+            toast.warning(response.message)
+            return;
+        }
+        setIsOpen(!isOpen)
+        setLoadingUpdate(false)
+        toast.success(response.message);
+    }
+
+    const handleIncrementRepetitions = () => {
+        setRepetitions((prev) => prev + 1);
+    };
+
+    const handleDecrementRepetitions = () => {
+        setRepetitions((prev) => (prev > 0 ? prev - 1 : prev));
+    };
+
+    const handleIncrementWeight = () => {
+        setWeight((prev) => prev + 2.5);
+    };
+
+    const handleDecrementWeight = () => {
+        setWeight((prev) => (prev > 0 ? prev - 2.5 : prev));
+    };
 
     return (
         <div className={`w-full overflow-hidden h-full px-6`}>
@@ -68,8 +121,9 @@ export default function ExerciseCard({
                         <div className="flex flex-col justify-between items-center w-14 h-full">
                             {isOpen
                                 ? <>
-                                    <div className="h-10 w-full flex justify-center items-center cursor-pointer">
-                                        <CheckIcon className="h-7 w-7" />
+                                    <div onClick={handleUpdateValues}
+                                        className="h-10 w-full flex justify-center items-center cursor-pointer">
+                                        {loadingUpdate ? <SpinIcon /> : <CheckIcon className="h-7 w-7" />}
                                     </div>
                                 </>
                                 : <>
@@ -80,7 +134,7 @@ export default function ExerciseCard({
                                 </>}
                             {isOpen
                                 ? <>
-                                    <div onClick={() => setIsOpen(!isOpen)}
+                                    <div onClick={handleCloseEdit}
                                         className="h-10 w-full flex justify-center items-center cursor-pointer">
                                         <Cross2Icon className="h-6 w-6" />
                                     </div>
@@ -88,9 +142,9 @@ export default function ExerciseCard({
                                 : <>
                                     <AlertDialog >
                                         <AlertDialogTrigger asChild>
-                                            <Button disabled={loading} variant={'hidden'} size={'hidden'}
+                                            <Button disabled={loadingDelete} variant={'hidden'} size={'hidden'}
                                                 className="h-10 w-full flex justify-center items-center cursor-pointer ">
-                                                <TrashIcon className="h-6 w-6" />
+                                                {loadingDelete ? <SpinIcon /> : <TrashIcon className="h-6 w-6" />}
                                             </Button>
                                         </AlertDialogTrigger>
                                         <AlertDialogContent>
@@ -115,23 +169,33 @@ export default function ExerciseCard({
                         </div>
                         <div className={`relative flex flex-col items-end justify-center gap-6 h-full w-full`}>
                             <div className="flex items-center gap-4">
-                                <p className="whitespace-nowrap text-sm text-muted-foreground">12 Reps.</p>
+                                <p className="whitespace-nowrap text-sm text-muted-foreground">
+                                    {`${repetitions} reps.`}
+                                </p>
                                 <div className="flex gap-6">
-                                    <Button size={'icon'} variant="violet">
+                                    <Button size={'icon'} variant="violet"
+                                        disabled={repetitions === 1}
+                                        onClick={handleDecrementRepetitions}>
                                         <MinusIcon className="h-5 w-5" />
                                     </Button>
-                                    <Button size={'icon'} variant="violet">
+                                    <Button size={'icon'} variant="violet"
+                                        onClick={handleIncrementRepetitions}>
                                         <PlusIcon className="h-5 w-5" />
                                     </Button>
                                 </div>
                             </div>
                             <div className="flex items-center gap-4">
-                                <p className="whitespace-nowrap text-sm text-muted-foreground">25,5 Kg.</p>
+                                <p className="whitespace-nowrap text-sm text-muted-foreground">
+                                    {`${weight} kg`}
+                                </p>
                                 <div className="flex gap-6">
-                                    <Button size={'icon'} variant="violet">
+                                    <Button size={'icon'} variant="violet"
+                                        disabled={weight === 2.5}
+                                        onClick={handleDecrementWeight}>
                                         <MinusIcon className="h-5 w-5" />
                                     </Button>
-                                    <Button size={'icon'} variant="violet">
+                                    <Button size={'icon'} variant="violet"
+                                        onClick={handleIncrementWeight}>
                                         <PlusIcon className="h-5 w-5" />
                                     </Button>
                                 </div>
