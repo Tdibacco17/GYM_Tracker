@@ -35,6 +35,7 @@ export default function ExerciseCard({
     const handleCloseEdit = () => {
         setIsOpen(!isOpen)
         setRepetitions(exerciseData.repetitions)
+        setWeight(() => { return parseFloat(parseWeight(exerciseData.weight)) })
     }
 
     const handleDelete = async () => {
