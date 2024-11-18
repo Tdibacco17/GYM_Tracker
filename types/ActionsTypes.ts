@@ -20,9 +20,9 @@ export interface AccountData {
     desiredWeight: number | null;
     height: number | null;
     age: number | null;
-    gender: string | null;
-    dailyActivity: string | null;
-    weightGoal: string | null,
+    gender: GenerType | null;
+    dailyActivity: DailyActivityType | null;
+    weightGoal: WeightGoalType | null,
     weightChangeGoal: number | null
 }
 

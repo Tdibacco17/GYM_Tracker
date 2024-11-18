@@ -18,7 +18,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { FormEvent, useState } from "react"
 import { toast } from "sonner"
-import { AccountData, UserProfileData } from "@/types/ActionsTypes"
+import { AccountData, DailyActivityType, GenerType, UserProfileData, WeightGoalType } from "@/types/ActionsTypes"
 import { updateProfileData } from "@/app/actions/profileActions"
 import {
     Select,
@@ -49,9 +49,9 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
             desiredWeight: parseFloat(formData.get('desired_weight') as string) || null,
             height: parseFloat(formData.get('height') as string) || null,
             age: parseInt(formData.get('age') as string) || null,
-            gender: formData.get('gender') as string || null,
-            dailyActivity: formData.get('daily_activity') as string || null,
-            weightGoal: formData.get('weight_goal') as string || null,
+            gender: formData.get('gender') as GenerType || null,
+            dailyActivity: formData.get('daily_activity') as DailyActivityType || null,
+            weightGoal: formData.get('weight_goal') as WeightGoalType || null,
             weightChangeGoal: parseFloat(formData.get('weight_change_goal') as string) || null,
         };
 
