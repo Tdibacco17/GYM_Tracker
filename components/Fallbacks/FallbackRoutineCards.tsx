@@ -10,8 +10,6 @@ export default function FallbackRoutineCards() {
             <div className="flex flex-col gap-8">
                 <Skeleton className="h-[168px] w-full" />
                 <Skeleton className="h-[168px] w-full" />
-                <Skeleton className="h-[168px] w-full" />
-                <Skeleton className="h-[168px] w-full" />
             </div>
         </div>
     )
