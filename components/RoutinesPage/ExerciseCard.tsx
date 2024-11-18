@@ -103,7 +103,7 @@ export default function ExerciseCard({
                 {/* card content */}
                 <div className={`h-full w-full flex flex-col justify-between gap-12  py-8`}>
                     <div>
-                        <p className="whitespace-nowrap text-2xl font-semibold tracking-tight">{exerciseData.name}</p>
+                        <p className="font-semibold tracking-tight max-w-[calc(100%-75px)]">{exerciseData.name}</p>
                     </div>
                     <div className="flex gap-8">
                         <p className="whitespace-nowrap text-sm text-muted-foreground">{`${exerciseData.repetitions} repeticiones`}</p>
