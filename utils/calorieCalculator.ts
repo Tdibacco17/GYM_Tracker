@@ -35,9 +35,6 @@ export const calculateBenedictCalories = (profileData: UserProfileData | null): 
         case 'very_active':
             factorActividad = 1.725;
             break;
-        case 'extra_active':
-            factorActividad = 1.9;
-            break;
         default:
             return null;
     }

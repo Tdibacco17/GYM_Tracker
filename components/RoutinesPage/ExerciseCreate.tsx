@@ -160,8 +160,18 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
                                             <SelectContent>
                                                 <SelectGroup>
                                                     <SelectLabel>Seleccionar tipo</SelectLabel>
-                                                    <SelectItem value="unilateral">Unilateral (un brazo/pierna)</SelectItem>
-                                                    <SelectItem value="bilateral">Bilateral (ambos brazos/piernas)</SelectItem>
+                                                    <SelectItem value="unilateral">
+                                                        Unilateral
+                                                        <span className="text-muted-foreground text-xs pl-2">
+                                                            (un brazo/pierna)
+                                                        </span>
+                                                    </SelectItem>
+                                                    <SelectItem value="bilateral">
+                                                        Bilateral
+                                                        <span className="text-muted-foreground text-xs pl-2">
+                                                            (ambos brazos/piernas)
+                                                        </span>
+                                                    </SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>
@@ -199,7 +209,11 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
                                                 <SelectGroup>
                                                     <SelectLabel>Seleccionar tipo</SelectLabel>
                                                     <SelectItem value="per_side">Por lado</SelectItem>
-                                                    <SelectItem value="total">General (total)</SelectItem>
+                                                    <SelectItem value="total">
+                                                        General
+                                                        <span className="text-muted-foreground text-xs pl-2">
+                                                            (total)
+                                                        </span></SelectItem>
                                                 </SelectGroup>
                                             </SelectContent>
                                         </Select>

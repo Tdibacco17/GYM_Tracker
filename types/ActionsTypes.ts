@@ -11,7 +11,7 @@ export interface UserProfileData {
 }
 
 export type GenerType = "male" | "female" | "other"
-export type DailyActivityType = "sedentary" | "lightly_active" | "moderately_active" | "very_active" | "extra_active";
+export type DailyActivityType = "sedentary" | "lightly_active" | "moderately_active" | "very_active";
 export type WeightGoalType = "gain" | "lose";
 
 // Update profile info

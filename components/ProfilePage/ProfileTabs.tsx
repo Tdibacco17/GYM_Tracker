@@ -205,12 +205,6 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                                         (6-7 días/semana)
                                                     </span>
                                                 </SelectItem>
-                                                <SelectItem value="extra_active">
-                                                    Extra Activa
-                                                    <span className="text-muted-foreground text-xs pl-2">
-                                                        (7 días/semana, doble turno)
-                                                    </span>
-                                                </SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
