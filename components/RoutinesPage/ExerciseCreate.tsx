@@ -12,10 +12,19 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { PlusIcon } from "@radix-ui/react-icons"
 import { useEffect, useRef, useState } from "react"
-import { ApiResponseInterface, NewExerciseData } from "@/types/ActionsTypes"
+import { ApiResponseInterface, NewExerciseData, RepetitionsType, WeightType } from "@/types/ActionsTypes"
 import { addExerciseToRoutine } from "@/app/actions/excerciseActions"
 import { toast } from "sonner"
 import { SpinIcon } from "../ui/icons"
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 export default function ExerciseCreate({ routineId }: { routineId: string }) {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -24,6 +33,12 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
     const exerciseRef = useRef<HTMLInputElement>(null)
     const repetitionsRef = useRef<HTMLInputElement>(null)
     const weightRef = useRef<HTMLInputElement>(null)
+    const [repetitionsType, setRepetitionsType] = useState<RepetitionsType | undefined>(undefined);
+    const [weightType, setWeightType] = useState<WeightType | undefined>(undefined);
+
+    const isValidStep = (value: number, step: number = 0.5): boolean => {
+        return (value % step === 0);
+    }
 
     const handleCreate = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -32,15 +47,25 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
         const repetitions = repetitionsRef.current?.value;
         const weight = weightRef.current?.value;
 
-        if (!name || !repetitions || !weight) {
+        if (!name || !repetitions || !weight || !repetitionsType || !weightType) {
+            toast.error("Todos los campos son obligatorios");
             return;
         }
+
+        const weightValue = parseFloat(weight);
+        if (!isValidStep(weightValue)) {
+            toast.error("El peso debe ser de 0.5 en 0.5");
+            return;
+        }
+
         setLoading(true)
         const newExercise: NewExerciseData = {
             routineId,
             name,
             repetitions: parseInt(repetitions, 10),
-            weight: parseFloat(weight),
+            weight: weightValue,
+            repetitionsType: repetitionsType,
+            weightType: weightType,
         }
 
         const response: ApiResponseInterface = await addExerciseToRoutine(newExercise)
@@ -57,6 +82,8 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
         if (exerciseRef.current) exerciseRef.current.value = "";
         if (repetitionsRef.current) repetitionsRef.current.value = "";
         if (weightRef.current) weightRef.current.value = "";
+        setRepetitionsType(undefined);
+        setWeightType(undefined);
         setIsOpen(!isOpen)
         setLoading(false)
         toast.success(response.message);
@@ -67,6 +94,8 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
             if (exerciseRef.current) exerciseRef.current.value = "";
             if (repetitionsRef.current) repetitionsRef.current.value = "";
             if (weightRef.current) weightRef.current.value = "";
+            setRepetitionsType(undefined);
+            setWeightType(undefined);
         }
     }, [isOpen]);
 
@@ -101,40 +130,80 @@ export default function ExerciseCreate({ routineId }: { routineId: string }) {
                                         required
                                     />
                                 </div>
-                                <div className="flex flex-col gap-2 justify-between">
-                                    <Label htmlFor="exercise-repetitions">Repeticiones</Label>
-                                    <Input
-                                        id="exercise-repetitions"
-                                        name="repetitions"
-                                        type="number"
-                                        placeholder="12"
-                                        className="w-full"
-                                        ref={repetitionsRef}
-                                        min={1}
-                                        required
-                                        onInvalid={(e) =>
-                                            e.currentTarget.setCustomValidity("Las repeticiones deben ser al menos 1.")
-                                        }
-                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
-                                    />
+                                <div className="grid grid-cols-2 gap-8 w-full">
+                                    <div className="flex flex-col gap-2 justify-between">
+                                        <Label htmlFor="exercise-repetitions">Repeticiones</Label>
+                                        <Input
+                                            id="exercise-repetitions"
+                                            name="repetitions"
+                                            type="number"
+                                            placeholder="12"
+                                            className="w-full"
+                                            ref={repetitionsRef}
+                                            min={1}
+                                            required
+                                            onInvalid={(e) =>
+                                                e.currentTarget.setCustomValidity("Las repeticiones deben ser al menos 1.")
+                                            }
+                                            onInput={(e) => e.currentTarget.setCustomValidity("")}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-2 justify-between">
+                                        <Label>Tipo de repeticiones</Label>
+                                        <Select
+                                            name="repetitions_type"
+                                            onValueChange={(value) => setRepetitionsType(value as RepetitionsType)}
+                                        >
+                                            <SelectTrigger className="w-full h-10">
+                                                <SelectValue placeholder="Seleccionar tipo" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>Seleccionar tipo</SelectLabel>
+                                                    <SelectItem value="unilateral">Unilateral (un brazo/pierna)</SelectItem>
+                                                    <SelectItem value="bilateral">Bilateral (ambos brazos/piernas)</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col gap-2 justify-between">
-                                    <Label htmlFor="exercise-weight">Peso</Label>
-                                    <Input
-                                        id="exercise-weight"
-                                        name="weight"
-                                        type="number"
-                                        placeholder="87.5"
-                                        step="0.1"
-                                        min="0.1"
-                                        className="w-full"
-                                        ref={weightRef}
-                                        required
-                                        onInvalid={(e) =>
-                                            e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
-                                        }
-                                        onInput={(e) => e.currentTarget.setCustomValidity("")}
-                                    />
+                                <div className="grid grid-cols-2 gap-8 w-full">
+                                    <div className="flex flex-col gap-2 justify-between">
+                                        <Label htmlFor="exercise-weight">Peso</Label>
+                                        <Input
+                                            id="exercise-weight"
+                                            name="weight"
+                                            type="number"
+                                            placeholder="87.5"
+                                            step="0.1"
+                                            min="0.1"
+                                            className="w-full"
+                                            ref={weightRef}
+                                            required
+                                            onInvalid={(e) =>
+                                                e.currentTarget.setCustomValidity("El peso debe ser mayor a 0.")
+                                            }
+                                            onInput={(e) => e.currentTarget.setCustomValidity("")}
+                                        />
+                                    </div>
+                                    <div className="flex flex-col gap-2 justify-between">
+                                        <Label>Tipo de peso</Label>
+                                        <Select
+                                            name="weight_type"
+                                            onValueChange={(value) => setWeightType(value as WeightType)}
+                                        >
+                                            <SelectTrigger className="w-full h-10">
+                                                <SelectValue placeholder="Seleccionar tipo de peso" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                <SelectGroup>
+                                                    <SelectLabel>Seleccionar tipo</SelectLabel>
+                                                    <SelectItem value="per_side">Por lado</SelectItem>
+                                                    <SelectItem value="total">General (total)</SelectItem>
+                                                </SelectGroup>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
                                 </div>
                             </div>
                         </div>

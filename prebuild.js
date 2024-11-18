@@ -82,7 +82,9 @@ const createTables = async () => {
                 id TEXT PRIMARY KEY,
                 name VARCHAR(50) NOT NULL,
                 repetitions INT NOT NULL,
+                repetitions_type VARCHAR(20) NOT NULL,
                 weight DECIMAL(5, 2) NOT NULL,
+                weight_type VARCHAR(20) NOT NULL,
                 routine_id TEXT REFERENCES routines(id) ON DELETE CASCADE
             );
         `;
@@ -120,7 +122,7 @@ const dropTables = async () => {
 
 (async () => {
     try {
-        // await createTables();
+        await createTables();
         // await dropTables();
     } catch (error) {
         console.error('Error occurred:', error.message);

@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { SpinIcon } from "../ui/icons";
 import { updateExercise } from "@/app/actions/routineActions";
+import { parseLbs } from "@/utils/parseLbs";
 
 export default function ExerciseCard({
     isBorderB, exerciseData, routineId
@@ -98,18 +99,34 @@ export default function ExerciseCard({
 
     return (
         <div className={`w-full overflow-hidden h-full px-6`}>
+            {/* overflow-hidden */}
             <div className={`relative w-full h-full ${isBorderB ? "" : "border-b"}`}>
-
                 {/* card content */}
                 <div className={`h-full w-full flex flex-col justify-between gap-12  py-8`}>
-                    <div>
-                        <p className="font-semibold tracking-tight max-w-[calc(100%-75px)]">{exerciseData.name}</p>
+                    <div className="flex flex-col">
+                        <p className="text-lg font-semibold tracking-tight max-w-[calc(100%-75px)]">
+                            {exerciseData.name}
+                        </p>
+                        <p className="whitespace-nowrap text-sm text-muted-foreground flex items-start gap-2">
+                            <span>
+                                {`${exerciseData.repetitions} repeticiones`}
+                            </span>
+                            {exerciseData.repetitions_type === 'unilateral' &&
+                                <span >
+                                    {`unilaterales`}
+                                </span>
+                            }
+                        </p>
                     </div>
-                    <div className="flex gap-8">
-                        <p className="whitespace-nowrap text-sm text-muted-foreground">{`${exerciseData.repetitions} repeticiones`}</p>
+                    <div className="flex gap-2 items-center">
                         <Badge variant={'violet'} className="whitespace-nowrap">
-                            {`${parseWeight(exerciseData.weight)} kg`}
+                            {`${parseWeight(exerciseData.weight)} kg / ${parseLbs(exerciseData.weight)} lbs`}
                         </Badge>
+                        {exerciseData.weight_type === 'per_side' &&
+                            <p className="whitespace-nowrap text-sm text-muted-foreground">
+                                {`Por lado`}
+                            </p>
+                        }
                     </div>
                 </div>
 
@@ -117,9 +134,9 @@ export default function ExerciseCard({
                 <div className={`${isOpen ? "bg-background/40 backdrop-blur supports-[backdrop-filter]:bg-background/40" : "bg-transparent"} absolute top-0 -left-6 h-full w-full transition-background duration-300 pointer-events-none`} />
 
                 {/* Botonera */}
-                <div className={`absolute top-0 ${isOpen ? "right-0" : "-right-[228px]"} bg-background transition-all duration-300 w-[275px] h-full py-8`}>
-                    <div className="border-l flex justify-end items-center h-full">
-                        <div className="flex flex-col justify-between items-center w-14 h-full">
+                <div className={`absolute top-0 ${isOpen ? "right-0" : "-right-[calc(100%-40px)] tiny:-right-[calc(300px-40px)]"} bg-background transition-all duration-300 w-full tiny:w-[300px] tiny:min-w-[300px] h-full py-8`}>
+                    <div className="border-l flex justify-start items-center h-full w-full gap-6">
+                        <div className="flex flex-col justify-center gap-6 items-center min-w-10 w-10 h-full">
                             {isOpen
                                 ? <>
                                     <div onClick={handleUpdateValues}
@@ -168,7 +185,7 @@ export default function ExerciseCard({
                                     </AlertDialog>
                                 </>}
                         </div>
-                        <div className={`relative flex flex-col items-end justify-center gap-6 h-full w-full`}>
+                        <div className={`relative flex flex-col items-end justify-center gap-6 h-full w-full overflow-hidden`}>
                             <div className="flex items-center gap-4">
                                 <p className="whitespace-nowrap text-sm text-muted-foreground">
                                     {`${repetitions} reps.`}
@@ -187,7 +204,7 @@ export default function ExerciseCard({
                             </div>
                             <div className="flex items-center gap-4">
                                 <p className="whitespace-nowrap text-sm text-muted-foreground">
-                                    {`${weight} kg`}
+                                    {`${weight} kg / ${parseLbs(weight)} lbs`}
                                 </p>
                                 <div className="flex gap-6">
                                     <Button size={'icon'} variant="violet"

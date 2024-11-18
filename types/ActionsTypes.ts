@@ -4,11 +4,15 @@ export interface UserProfileData {
     desired_weight: number | null,
     current_weight: number | null,
     age: number | null,
-    gender: string | null,
-    daily_activity: string | null,
-    weight_goal: string | null,
+    gender: GenerType | null,
+    daily_activity: DailyActivityType | null,
+    weight_goal: WeightGoalType | null,
     weight_change_goal: number | null
 }
+
+export type GenerType = "male" | "female" | "other"
+export type DailyActivityType = "sedentary" | "lightly_active" | "moderately_active" | "very_active" | "extra_active";
+export type WeightGoalType = "gain" | "lose";
 
 // Update profile info
 export interface AccountData {
@@ -42,8 +46,13 @@ export interface NewExerciseData {
     routineId: string,
     name: string;
     repetitions: number;
+    repetitionsType: RepetitionsType,
     weight: number;
+    weightType: WeightType,
 }
+
+export type RepetitionsType = "unilateral" | "bilateral"
+export type WeightType = "per_side" | "total"
 
 // Get ExcerciseData
 export interface ExcerciseData {
@@ -51,12 +60,16 @@ export interface ExcerciseData {
     name: string;
     repetitions: number;
     weight: number;
+    repetitions_type: RepetitionsType | null,
+    weight_type: WeightType | null,
 }
 
 // Update Values Excercise
 export interface UpdateValuesExercise {
     repetitions: number | null;
-    weight: number | null
+    weight: number | null;
+    // repetitions_type: string | null,
+    // weight_type: string | null,
 }
 
 // Resputa sin data

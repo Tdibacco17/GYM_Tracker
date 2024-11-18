@@ -13,7 +13,7 @@ export async function addExerciseToRoutine(exerciseData: NewExerciseData): Promi
         const session: NextAuthToken | null = await getSessionToken();
         if (!session) { return { message: `No existe una sesión.`, status: 404 }; }
 
-        const { routineId, name, repetitions, weight } = exerciseData;
+        const { routineId, name, repetitions, weight, repetitionsType, weightType } = exerciseData;
 
         const verifyRoutineQuery = `
             SELECT id FROM routines WHERE id = $1 AND user_id = $2
@@ -25,8 +25,8 @@ export async function addExerciseToRoutine(exerciseData: NewExerciseData): Promi
         }
 
         const insertExerciseQuery = `
-            INSERT INTO exercises (id, name, repetitions, weight, routine_id)
-            VALUES ($1, $2, $3, $4, $5)
+            INSERT INTO exercises (id, name, repetitions, weight, repetitions_type, weight_type, routine_id) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7)
         `;
         const exerciseId = uuidv4();
         const insertExerciseResult = await pool.query(insertExerciseQuery, [
@@ -34,6 +34,8 @@ export async function addExerciseToRoutine(exerciseData: NewExerciseData): Promi
             name,
             repetitions,
             weight,
+            repetitionsType,
+            weightType,
             routineId,
         ]);
 
@@ -68,10 +70,10 @@ export async function getExercisesByRoutine(routineId: string): Promise<ApiDataR
         }
 
         const getExercisesQuery = `
-            SELECT id, name, repetitions, weight
+            SELECT id, name, repetitions, weight, repetitions_type, weight_type
             FROM exercises
             WHERE routine_id = $1
-            ORDER BY name ASC
+            ORDER BY name ASC;
         `;
         const exercisesResult = await pool.query(getExercisesQuery, [routineId]);
 

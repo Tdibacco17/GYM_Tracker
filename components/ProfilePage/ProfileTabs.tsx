@@ -181,11 +181,36 @@ export default function ProfileTabs({ profileData }: { profileData: UserProfileD
                                         </SelectTrigger>
                                         <SelectContent >
                                             <SelectGroup >
-                                                <SelectLabel>Seleccionar nivel de actividad</SelectLabel>
-                                                <SelectItem value="sedentary">Sedentario</SelectItem>
-                                                <SelectItem value="lightly_active">Ligera</SelectItem>
-                                                <SelectItem value="moderately_active">Moderada</SelectItem>
-                                                <SelectItem value="very_active">Intensa</SelectItem>
+                                                <SelectItem value="sedentary">
+                                                    Sedentario
+                                                    <span className="text-muted-foreground text-xs pl-2">
+                                                        (0-1 días/semana)
+                                                    </span>
+                                                </SelectItem>
+                                                <SelectItem value="lightly_active">
+                                                    Ligera
+                                                    <span className="text-muted-foreground text-xs pl-2">
+                                                        (1-3 días/semana)
+                                                    </span>
+                                                </SelectItem>
+                                                <SelectItem value="moderately_active">
+                                                    Moderada
+                                                    <span className="text-muted-foreground text-xs pl-2">
+                                                        (3-5 días/semana)
+                                                    </span>
+                                                </SelectItem>
+                                                <SelectItem value="very_active">
+                                                    Intensa
+                                                    <span className="text-muted-foreground text-xs pl-2">
+                                                        (6-7 días/semana)
+                                                    </span>
+                                                </SelectItem>
+                                                <SelectItem value="extra_active">
+                                                    Extra Activa
+                                                    <span className="text-muted-foreground text-xs pl-2">
+                                                        (7 días/semana, doble turno)
+                                                    </span>
+                                                </SelectItem>
                                             </SelectGroup>
                                         </SelectContent>
                                     </Select>
