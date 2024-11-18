@@ -89,11 +89,11 @@ export default function ExerciseCard({
     };
 
     const handleIncrementWeight = () => {
-        setWeight((prev) => prev + 2.5);
+        setWeight((prev) => prev + 0.5);
     };
 
     const handleDecrementWeight = () => {
-        setWeight((prev) => (prev > 0 ? prev - 2.5 : prev));
+        setWeight((prev) => (prev > 0 ? prev - 0.5 : prev));
     };
 
     return (
@@ -191,7 +191,7 @@ export default function ExerciseCard({
                                 </p>
                                 <div className="flex gap-6">
                                     <Button size={'icon'} variant="violet"
-                                        disabled={weight === 2.5}
+                                        disabled={weight === 0.5}
                                         onClick={handleDecrementWeight}>
                                         <MinusIcon className="h-5 w-5" />
                                     </Button>
