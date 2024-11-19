@@ -107,7 +107,7 @@ export default function ExerciseCard({
                         <p className="text-lg font-semibold tracking-tight max-w-[calc(100%-75px)]">
                             {exerciseData.name}
                         </p>
-                        <p className="whitespace-nowrap text-sm text-muted-foreground flex items-start gap-2">
+                        <p className="whitespace-nowrap text-sm text-muted-foreground flex items-start gap-1">
                             <span>
                                 {`${exerciseData.repetitions} repeticiones`}
                             </span>
